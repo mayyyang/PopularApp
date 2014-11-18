@@ -24,6 +24,7 @@
 		49C75D551A1AE990001E3156 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C75D541A1AE990001E3156 /* Social.framework */; };
 		49C75D571A1AE995001E3156 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C75D561A1AE995001E3156 /* AdSupport.framework */; };
 		49C75D591A1AE999001E3156 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C75D581A1AE999001E3156 /* Accounts.framework */; };
+		49C75D5D1A1AF498001E3156 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */; };
 		FBBB8B651A1ACE3B00E40A93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B641A1ACE3B00E40A93 /* main.m */; };
 		FBBB8B681A1ACE3B00E40A93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B671A1ACE3B00E40A93 /* AppDelegate.m */; };
 		FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B6A1A1ACE3B00E40A93 /* RootViewController.m */; };
@@ -67,6 +68,8 @@
 		49C75D541A1AE990001E3156 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		49C75D561A1AE995001E3156 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		49C75D581A1AE999001E3156 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		49C75D5B1A1AF498001E3156 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		FBBB8B5F1A1ACE3B00E40A93 /* Popular App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Popular App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBB8B631A1ACE3B00E40A93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBBB8B641A1ACE3B00E40A93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -183,11 +186,11 @@
 		FBBB8B611A1ACE3B00E40A93 /* Popular App */ = {
 			isa = PBXGroup;
 			children = (
+				FBBB8B6C1A1ACE3B00E40A93 /* Main.storyboard */,
 				FBBB8B661A1ACE3B00E40A93 /* AppDelegate.h */,
 				FBBB8B671A1ACE3B00E40A93 /* AppDelegate.m */,
 				FBBB8B691A1ACE3B00E40A93 /* RootViewController.h */,
 				FBBB8B6A1A1ACE3B00E40A93 /* RootViewController.m */,
-				FBBB8B6C1A1ACE3B00E40A93 /* Main.storyboard */,
 				FBBB8B881A1AEE2100E40A93 /* RootDetailViewController.h */,
 				FBBB8B891A1AEE2100E40A93 /* RootDetailViewController.m */,
 				FBBB8B8B1A1AEE9300E40A93 /* SearchViewController.h */,
@@ -200,6 +203,8 @@
 				FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */,
 				FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */,
 				FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */,
+				49C75D5B1A1AF498001E3156 /* PhotoCollectionViewCell.h */,
+				49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */,
 				FBBB8B6F1A1ACE3B00E40A93 /* Images.xcassets */,
 				FBBB8B711A1ACE3B00E40A93 /* LaunchScreen.xib */,
 				FBBB8B621A1ACE3B00E40A93 /* Supporting Files */,
@@ -336,6 +341,7 @@
 				FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */,
 				FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */,
 				FBBB8B681A1ACE3B00E40A93 /* AppDelegate.m in Sources */,
+				49C75D5D1A1AF498001E3156 /* PhotoCollectionViewCell.m in Sources */,
 				FBBB8B8D1A1AEE9300E40A93 /* SearchViewController.m in Sources */,
 				FBBB8B901A1AEEBE00E40A93 /* SearchDetailViewController.m in Sources */,
 				FBBB8B8A1A1AEE2100E40A93 /* RootDetailViewController.m in Sources */,
