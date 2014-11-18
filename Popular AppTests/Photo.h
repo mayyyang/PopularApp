@@ -10,6 +10,7 @@
 #import <Parse/PFObject+Subclass.h>
 #import "Profile.h"
 
+@class Profile;
 @interface Photo : PFObject  <PFSubclassing>
 
 @property (nonatomic, strong) Profile *profile;
