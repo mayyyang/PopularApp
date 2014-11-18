@@ -190,16 +190,25 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="0sl-ub-eEg">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="0sl-ub-eEg" customClass="PhotoCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kd-lx-xpk">
+                                                    <rect key="frame" x="13" y="0.0" width="50" height="50"/>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="MUs-TN-6vr" id="9OZ-Ne-0pm"/>
+                                    <outlet property="delegate" destination="MUs-TN-6vr" id="EhI-HT-tjh"/>
+                                </connections>
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EpA-AL-KuM">
                                 <rect key="frame" x="0.0" y="40" width="163" height="164"/>
@@ -221,6 +230,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zk1-Xw-6E8"/>
+                    <connections>
+                        <outlet property="collectionView" destination="MN5-U0-VTk" id="noH-x0-Efe"/>
+                        <outlet property="descriptionTextView" destination="JkH-PZ-CNE" id="2EY-kr-zAS"/>
+                        <outlet property="followerCountLabel" destination="9Hs-Lq-bOi" id="1UG-vh-Bb9"/>
+                        <outlet property="followingCountLabel" destination="2aw-mT-qdn" id="TPL-5q-o5j"/>
+                        <outlet property="imageView" destination="EpA-AL-KuM" id="Wq8-bd-RPX"/>
+                        <outlet property="nameLabel" destination="5dd-cP-dfN" id="szN-7F-gol"/>
+                        <outlet property="photoCountLabel" destination="jWH-Od-zWi" id="aLS-wk-f1e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1c-oz-L6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
