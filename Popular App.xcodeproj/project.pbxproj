@@ -38,6 +38,8 @@
 		FBBB8B931A1AEEF000E40A93 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B921A1AEEF000E40A93 /* CameraViewController.m */; };
 		FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */; };
 		FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */; };
+		FBBB8B9B1A1AF7C100E40A93 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBB8B9A1A1AF7C100E40A93 /* Parse.framework */; };
+		FBBB8B9D1A1AF91500E40A93 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBB8B9C1A1AF91500E40A93 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		FBBB8B9A1A1AF7C100E40A93 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../Downloads/ParsePlatform-LoginAndSignUpTutorial-0710943/Parse.framework"; sourceTree = "<group>"; };
+		FBBB8B9C1A1AF91500E40A93 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Downloads/ParsePlatform-LoginAndSignUpTutorial-0710943/FacebookSDK.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49C75D591A1AE999001E3156 /* Accounts.framework in Frameworks */,
+				FBBB8B9D1A1AF91500E40A93 /* FacebookSDK.framework in Frameworks */,
 				49C75D571A1AE995001E3156 /* AdSupport.framework in Frameworks */,
 				49C75D551A1AE990001E3156 /* Social.framework in Frameworks */,
 				49C75D531A1AE98C001E3156 /* SystemConfiguration.framework in Frameworks */,
@@ -112,6 +117,7 @@
 				49C75D4B1A1AE972001E3156 /* MobileCoreServices.framework in Frameworks */,
 				49C75D491A1AE96B001E3156 /* libz.dylib in Frameworks */,
 				49C75D471A1AE964001E3156 /* CoreLocation.framework in Frameworks */,
+				FBBB8B9B1A1AF7C100E40A93 /* Parse.framework in Frameworks */,
 				49C75D451A1AE95E001E3156 /* CoreGraphics.framework in Frameworks */,
 				49C75D431A1AE958001E3156 /* CFNetwork.framework in Frameworks */,
 				49C75D411A1AE952001E3156 /* AudioToolbox.framework in Frameworks */,
@@ -146,6 +152,8 @@
 		49C75D5A1A1AE9A8001E3156 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBBB8B9C1A1AF91500E40A93 /* FacebookSDK.framework */,
+				FBBB8B9A1A1AF7C100E40A93 /* Parse.framework */,
 				49C75D581A1AE999001E3156 /* Accounts.framework */,
 				49C75D561A1AE995001E3156 /* AdSupport.framework */,
 				49C75D541A1AE990001E3156 /* Social.framework */,
@@ -472,6 +480,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/parse-library-1",
+					"/Users/mayyang/Downloads/ParsePlatform-LoginAndSignUpTutorial-0710943",
 				);
 				INFOPLIST_FILE = "Popular App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -486,6 +495,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/parse-library-1",
+					"/Users/mayyang/Downloads/ParsePlatform-LoginAndSignUpTutorial-0710943",
 				);
 				INFOPLIST_FILE = "Popular App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

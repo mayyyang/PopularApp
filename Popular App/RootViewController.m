@@ -8,8 +8,11 @@
 
 #import "RootViewController.h"
 #import "PhotoCollectionViewCell.h"
+#import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <ParseUI/ParseUI.h>
 
-@interface RootViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface RootViewController () <UICollectionViewDataSource, UICollectionViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -25,6 +28,29 @@
     [super viewDidLoad];
     self.arrayOfRecentPhoto = [@[]mutableCopy];
     self.arrayOfPopularPhoto = [@[]mutableCopy];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (![PFUser currentUser]) // No user logged in
+    {
+        // Create the log in view controller
+        PFLogInViewController *logInViewController = [[PFLogInViewController alloc]init];
+        [logInViewController setDelegate:self]; // Set ourselves as the delegate
+
+        // Create the sign up view controller
+        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc]init];
+        [signUpViewController setDelegate:self]; // Set ourselves as the delegate
+
+        // Assign our sign up controller to be displayed from the login controller
+        [logInViewController setSignUpController:signUpViewController];
+
+        //Present the log in view controller
+        [self presentViewController:logInViewController animated:YES completion:NULL];
+    }
+
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
