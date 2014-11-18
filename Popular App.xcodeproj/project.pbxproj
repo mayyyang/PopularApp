@@ -31,6 +31,12 @@
 		FBBB8B701A1ACE3B00E40A93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBBB8B6F1A1ACE3B00E40A93 /* Images.xcassets */; };
 		FBBB8B731A1ACE3B00E40A93 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBB8B711A1ACE3B00E40A93 /* LaunchScreen.xib */; };
 		FBBB8B7F1A1ACE3B00E40A93 /* Popular_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B7E1A1ACE3B00E40A93 /* Popular_AppTests.m */; };
+		FBBB8B8A1A1AEE2100E40A93 /* RootDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B891A1AEE2100E40A93 /* RootDetailViewController.m */; };
+		FBBB8B8D1A1AEE9300E40A93 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B8C1A1AEE9300E40A93 /* SearchViewController.m */; };
+		FBBB8B901A1AEEBE00E40A93 /* SearchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B8F1A1AEEBE00E40A93 /* SearchDetailViewController.m */; };
+		FBBB8B931A1AEEF000E40A93 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B921A1AEEF000E40A93 /* CameraViewController.m */; };
+		FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */; };
+		FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +80,18 @@
 		FBBB8B781A1ACE3B00E40A93 /* Popular AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Popular AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBB8B7D1A1ACE3B00E40A93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBBB8B7E1A1ACE3B00E40A93 /* Popular_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Popular_AppTests.m; sourceTree = "<group>"; };
+		FBBB8B881A1AEE2100E40A93 /* RootDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootDetailViewController.h; sourceTree = "<group>"; };
+		FBBB8B891A1AEE2100E40A93 /* RootDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootDetailViewController.m; sourceTree = "<group>"; };
+		FBBB8B8B1A1AEE9300E40A93 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		FBBB8B8C1A1AEE9300E40A93 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		FBBB8B8E1A1AEEBE00E40A93 /* SearchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDetailViewController.h; sourceTree = "<group>"; };
+		FBBB8B8F1A1AEEBE00E40A93 /* SearchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDetailViewController.m; sourceTree = "<group>"; };
+		FBBB8B911A1AEEF000E40A93 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		FBBB8B921A1AEEF000E40A93 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		FBBB8B941A1AEF1700E40A93 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
+		FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +188,18 @@
 				FBBB8B691A1ACE3B00E40A93 /* RootViewController.h */,
 				FBBB8B6A1A1ACE3B00E40A93 /* RootViewController.m */,
 				FBBB8B6C1A1ACE3B00E40A93 /* Main.storyboard */,
+				FBBB8B881A1AEE2100E40A93 /* RootDetailViewController.h */,
+				FBBB8B891A1AEE2100E40A93 /* RootDetailViewController.m */,
+				FBBB8B8B1A1AEE9300E40A93 /* SearchViewController.h */,
+				FBBB8B8C1A1AEE9300E40A93 /* SearchViewController.m */,
+				FBBB8B8E1A1AEEBE00E40A93 /* SearchDetailViewController.h */,
+				FBBB8B8F1A1AEEBE00E40A93 /* SearchDetailViewController.m */,
+				FBBB8B911A1AEEF000E40A93 /* CameraViewController.h */,
+				FBBB8B921A1AEEF000E40A93 /* CameraViewController.m */,
+				FBBB8B941A1AEF1700E40A93 /* ActivityViewController.h */,
+				FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */,
+				FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */,
+				FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */,
 				FBBB8B6F1A1ACE3B00E40A93 /* Images.xcassets */,
 				FBBB8B711A1ACE3B00E40A93 /* LaunchScreen.xib */,
 				FBBB8B621A1ACE3B00E40A93 /* Supporting Files */,
@@ -304,8 +334,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */,
+				FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */,
 				FBBB8B681A1ACE3B00E40A93 /* AppDelegate.m in Sources */,
+				FBBB8B8D1A1AEE9300E40A93 /* SearchViewController.m in Sources */,
+				FBBB8B901A1AEEBE00E40A93 /* SearchDetailViewController.m in Sources */,
+				FBBB8B8A1A1AEE2100E40A93 /* RootDetailViewController.m in Sources */,
+				FBBB8B931A1AEEF000E40A93 /* CameraViewController.m in Sources */,
 				FBBB8B651A1ACE3B00E40A93 /* main.m in Sources */,
+				FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
