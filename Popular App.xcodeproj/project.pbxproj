@@ -25,6 +25,8 @@
 		49C75D571A1AE995001E3156 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C75D561A1AE995001E3156 /* AdSupport.framework */; };
 		49C75D591A1AE999001E3156 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C75D581A1AE999001E3156 /* Accounts.framework */; };
 		49C75D5D1A1AF498001E3156 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */; };
+		49C75D601A1B0D8D001E3156 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C75D5F1A1B0D8D001E3156 /* EditProfileViewController.m */; };
+		49C75D631A1B152F001E3156 /* FollowListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C75D621A1B152F001E3156 /* FollowListViewController.m */; };
 		FBBB8B651A1ACE3B00E40A93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B641A1ACE3B00E40A93 /* main.m */; };
 		FBBB8B681A1ACE3B00E40A93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B671A1ACE3B00E40A93 /* AppDelegate.m */; };
 		FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B6A1A1ACE3B00E40A93 /* RootViewController.m */; };
@@ -72,6 +74,10 @@
 		49C75D581A1AE999001E3156 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		49C75D5B1A1AF498001E3156 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		49C75D5E1A1B0D8D001E3156 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		49C75D5F1A1B0D8D001E3156 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		49C75D611A1B152F001E3156 /* FollowListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowListViewController.h; sourceTree = "<group>"; };
+		49C75D621A1B152F001E3156 /* FollowListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowListViewController.m; sourceTree = "<group>"; };
 		FBBB8B5F1A1ACE3B00E40A93 /* Popular App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Popular App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBB8B631A1ACE3B00E40A93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBBB8B641A1ACE3B00E40A93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -211,6 +217,10 @@
 				FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */,
 				FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */,
 				FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */,
+				49C75D5E1A1B0D8D001E3156 /* EditProfileViewController.h */,
+				49C75D5F1A1B0D8D001E3156 /* EditProfileViewController.m */,
+				49C75D611A1B152F001E3156 /* FollowListViewController.h */,
+				49C75D621A1B152F001E3156 /* FollowListViewController.m */,
 				49C75D5B1A1AF498001E3156 /* PhotoCollectionViewCell.h */,
 				49C75D5C1A1AF498001E3156 /* PhotoCollectionViewCell.m */,
 				FBBB8B6F1A1ACE3B00E40A93 /* Images.xcassets */,
@@ -347,7 +357,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */,
+				49C75D601A1B0D8D001E3156 /* EditProfileViewController.m in Sources */,
 				FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */,
+				49C75D631A1B152F001E3156 /* FollowListViewController.m in Sources */,
 				FBBB8B681A1ACE3B00E40A93 /* AppDelegate.m in Sources */,
 				49C75D5D1A1AF498001E3156 /* PhotoCollectionViewCell.m in Sources */,
 				FBBB8B8D1A1AEE9300E40A93 /* SearchViewController.m in Sources */,
