@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 May Yang. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "RootViewController.h"
 
-@interface ViewController ()
+@interface RootViewController ()
 
 @end
 
-@implementation ViewController
+@implementation RootViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
