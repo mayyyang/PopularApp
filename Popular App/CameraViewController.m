@@ -8,6 +8,11 @@
 
 #import "CameraViewController.h"
 
+
+@interface CameraViewController ()
+
+@end
+
 @implementation CameraViewController
 
 @end

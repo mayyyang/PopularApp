@@ -39,7 +39,7 @@
     {
         UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
         self.imageView.image = pickerImage;
-        NSData *profileImageData = UIImagePNGRepresentation(pickerImage);
+//        NSData *profileImageData = UIImagePNGRepresentation(pickerImage);
 //        self.lostCharacter.photo = profileImageData;
         [picker dismissViewControllerAnimated:YES completion:nil];
     }

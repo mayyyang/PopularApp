@@ -8,6 +8,10 @@
 
 #import "RootDetailViewController.h"
 
+@interface RootDetailViewController ()
+
+@end
+
 @implementation RootDetailViewController
 
 @end

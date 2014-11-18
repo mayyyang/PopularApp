@@ -55,7 +55,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.segmentControl == 0)
+    if (self.segmentControl.selectedSegmentIndex == 0)
     {
         return self.arrayOfRecentPhoto.count;
     }
@@ -70,7 +70,7 @@
 {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     NSData *data = [NSData new];
-    if (self.segmentControl == 0)
+    if (self.segmentControl.selectedSegmentIndex == 0)
     {
         data = self.arrayOfRecentPhoto[indexPath.item];
     }

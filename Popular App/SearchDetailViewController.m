@@ -8,6 +8,11 @@
 
 #import "SearchDetailViewController.h"
 
+
+@interface SearchDetailViewController ()
+
+@end
+
 @implementation SearchDetailViewController
 
 @end

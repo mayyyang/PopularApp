@@ -8,6 +8,11 @@
 
 #import "SearchViewController.h"
 
+@interface SearchViewController ()
+
+@end
+
+
 @implementation SearchViewController
 
 @end
