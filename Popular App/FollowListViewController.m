@@ -8,7 +8,10 @@
 
 #import "FollowListViewController.h"
 
-@interface FollowListViewController ()
+@interface FollowListViewController ()  <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property NSArray *arrayOfFollow;
 
 @end
 
@@ -17,5 +20,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.arrayOfFollow = [@[]mutableCopy];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return self.arrayOfFollow.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+
+    NSString *text = self.arrayOfFollow[indexPath.row];
+
+    cell.textLabel.text = text;
+    return cell;
+}
+
 @end
