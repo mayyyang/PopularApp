@@ -8,6 +8,8 @@
 
 #import "SearchViewController.h"
 #import <Parse/Parse.h>
+#import "Tag.h"
+#import "Profile.h"
 
 @interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -46,23 +48,24 @@
 
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
-        PFObject *tag = self.tableViewArray[indexPath.row];
-        NSString *text = tag[@"tag"];
-        cell.textLabel.text = text;
+        Tag *tag = self.tableViewArray[indexPath.row];
+//        PFObject *tag = self.tableViewArray[indexPath.row];
+//        NSString *text = tag[@"tag"];
+        cell.textLabel.text = tag.tag;
     }
     else
     {
-        PFObject *profile = self.tableViewArray[indexPath.row];
-        NSString *text = profile[@"name"];
-        NSString *detail = profile[@"description"];
-        NSData *imageData = profile[@"avatar"];
-        UIImage *image = [UIImage imageWithData:imageData];
-        cell.textLabel.text = text;
-        cell.detailTextLabel.text = detail;
-        cell.imageView.image = image;
+        Profile *profile = self.tableViewArray[indexPath.row];
+//        PFObject *profile = self.tableViewArray[indexPath.row];
+//        NSString *text = profile[@"name"];
+//        NSString *detail = profile[@"description"];
+        cell.textLabel.text = profile.name;
+        cell.detailTextLabel.text = profile.description;
+        NSData *imageData = profile.avatarData;
+        cell.imageView.image = [UIImage imageWithData:imageData];
     }
 
-    return nil;
+    return cell;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;
@@ -89,9 +92,11 @@
 
 -(void)refreshDisplay:(UIRefreshControl *)refreshControl withClass:(NSString *)class withSearchText:(NSString *)searchText withOrderByKey:(NSString *)orderKey
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"%@ BEGINSWITH %@",orderKey, searchText];
-    PFQuery *query = [PFQuery queryWithClassName:class predicate:predicate];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ BEGINSWITH %@",orderKey, searchText];
+//    PFQuery *query = [PFQuery queryWithClassName:class predicate:predicate]; //crash point
+    PFQuery *query = [PFQuery queryWithClassName:class];
+
+    [query whereKey:orderKey hasPrefix:searchText]; //parse query format, better than predicate
     [query orderByAscending:orderKey]; //sort query
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
