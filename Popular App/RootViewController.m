@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "PhotoCollectionViewCell.h"
+#import "ProfileViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseUI/ParseUI.h>

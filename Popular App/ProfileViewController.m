@@ -8,9 +8,11 @@
 
 #import "ProfileViewController.h"
 #import "PhotoCollectionViewCell.h"
+#import "RootViewController.h"
+#import <ParseUI/ParseUI.h>
 @import Parse;
 
-@interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ProfileViewController () <UICollectionViewDataSource, UICollectionViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -38,6 +40,8 @@
 
 }
 
+#pragma mark - UIBUTTONS
+
 - (IBAction)followingListOnButtonPressed:(UIButton *)sender
 {
     //TODO: push following list viewcontroller
@@ -46,6 +50,15 @@
 {
     //TODO: push follower list viewcontroller
 }
+- (IBAction)logoutButton:(UIButton *)sender
+{
+    NSLog(@"test");
+    [PFUser logOut];
+    RootViewController *rootVC = [[RootViewController alloc]init];
+    [self presentViewController:rootVC animated:YES completion:nil];
+}
+
+#pragma mark - UICOLLECTIONVIEW METHODS
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
