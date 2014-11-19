@@ -628,6 +628,9 @@
                                 <segment title="Tag"/>
                                 <segment title="Profile"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentedControl:" destination="yaq-OJ-teo" eventType="valueChanged" id="JBH-AC-aZg"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>

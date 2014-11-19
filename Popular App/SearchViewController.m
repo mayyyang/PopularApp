@@ -55,6 +55,7 @@
     }
     else
     {
+
         Profile *profile = self.tableViewArray[indexPath.row];
 //        PFObject *profile = self.tableViewArray[indexPath.row];
 //        NSString *text = profile[@"name"];
@@ -80,7 +81,7 @@
         }
         else
         {
-            [self refreshDisplay:nil withClass:@"Profile" withSearchText:searchText withOrderByKey:@"name"];
+            [self refreshDisplay:nil withClass:@"Profile" withSearchText:searchText withOrderByKey:@"lowercaseName"];
         }
 
     }
@@ -89,6 +90,19 @@
 }
 
 //MARK: custom methods
+- (IBAction)segmentedControl:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == 0)
+    {
+        self.tableViewArray = @[];
+        [self.tableView reloadData];
+    }
+    else
+    {
+        self.tableViewArray = @[];
+        [self.tableView reloadData];
+    }
+}
 
 -(void)refreshDisplay:(UIRefreshControl *)refreshControl withClass:(NSString *)class withSearchText:(NSString *)searchText withOrderByKey:(NSString *)orderKey
 {
