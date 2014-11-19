@@ -86,22 +86,23 @@
 
                                     PFQuery *query = [Tag query];
                                     [query whereKey:@"tag" equalTo:textFieldForTag.text];
+
                                     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                                        if (objects) {
-                                            self.tag = objects.firstObject;
+                                        if (objects.count == 0)
+                                        {
+
 
                                             NSMutableArray *photoArray = [@[]mutableCopy];
                                             [photoArray addObject:self.photo.imageData];
-
-                                            self.tag.photos = photoArray;
+                                            self.tag.photosOfTag = photoArray;
                                         }
                                         else
                                         {
+                                            self.tag = objects.firstObject;
                                             self.tag.tag = textFieldForTag.text;
-                                            NSMutableArray *photoArray = [@[]mutableCopy];
+                                            NSMutableArray *photoArray = [NSMutableArray arrayWithArray:self.tag.photosOfTag];
                                             [photoArray addObject:self.photo.imageData];
-
-                                            self.tag.photos = photoArray;
+                                            self.tag.photosOfTag = photoArray;
 
                                         }
                                         self.tagLabel.text = textFieldForTag.text;
@@ -164,19 +165,12 @@
             [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error)
                 {
-
-                    PFRelation *photoRelation = [self.photo relationForKey:@"tags"];
-                    [photoRelation addObject:self.tag];
-
-                    PFRelation *tagRelation = [self.tag relationForKey:@"photos"];
-                    [tagRelation addObject:self.photo];
-
                     [self defaultDisplay];
 
                 }
                 else
                 {
-            [self Error:error];
+                    [self Error:error];
                 }
             }];
         }

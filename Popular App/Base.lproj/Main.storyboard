@@ -797,7 +797,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="jlt-zG-epI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="jlt-zG-epI">
                                 <rect key="frame" x="16" y="66" width="288" height="288"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="288" id="9pA-WG-4j8"/>
@@ -1106,7 +1106,7 @@
         <image name="camera" width="30" height="30"/>
         <image name="follow" width="30" height="30"/>
         <image name="home" width="30" height="30"/>
-        <image name="image" width="204" height="204"/>
+        <image name="image" width="128" height="128"/>
         <image name="profile" width="30" height="30"/>
         <image name="search" width="30" height="30"/>
     </resources>
