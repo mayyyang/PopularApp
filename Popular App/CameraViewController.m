@@ -15,9 +15,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *tagLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
-@property NSData *imageData;
+@property Photo *photo;
+@property Tag *tag;
 
 @end
 
@@ -26,10 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.photo = [Photo object];
 }
-
-
 
 - (IBAction)cameraOnButtonPressed:(UIButton *)sender
 {
@@ -52,25 +50,13 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
-    self.imageData = UIImagePNGRepresentation(pickerImage);
-    Photo *photo = [Photo object];
-    photo.imageData = self.imageData;
+    NSData *imageData = UIImageJPEGRepresentation(pickerImage, 0.1);
 
+    self.photo.imageData = imageData;
     User *user = [User currentUser];
-    photo.profile = user.profile;
-
-    [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error)
-        {
-            self.imageView.image = pickerImage;
-        }
-        else
-        {
-            NSLog(@"%@", error.localizedDescription);
-        }
-    }];
-
-
+    Profile *profile = user[@"profile"];
+    self.photo.profile = profile;
+    self.imageView.image = pickerImage;
 
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -92,9 +78,36 @@
                                     UITextField *textFieldForTag = alert.textFields.firstObject;
                                     Tag *tag = [Tag object];
                                     tag.tag = textFieldForTag.text;
-                                    NSMutableArray *array = [@[]mutableCopy];
-                                    [array addObject:self.imageData];
-                                    tag.photos = array;
+
+                                    PFRelation *relation = [tag relationForKey:@"photos"];
+                                    [relation addObject:self.photo];
+
+                                    [tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                        if (!error)
+                                        {
+                                            self.tagLabel.text = textFieldForTag.text;
+                                            PFRelation *relation = [self.photo relationForKey:@"tags"];
+                                            [relation addObject:tag];
+
+                                            [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                                if (!error)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    NSLog(@"%@", error.localizedDescription);
+                                                }
+                                            }];
+
+                                        }
+                                        else
+                                        {
+                                            NSLog(@"%@", error.localizedDescription);
+                                        }
+                                    }];
+//
+
                                 }];
     
     [alert addAction:action];
@@ -108,8 +121,29 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (IBAction)locationOnButtonPressed:(UIButton *)sender
+- (IBAction)confirmOnButtonPressed:(UIButton *)sender
 {
+
+                                        [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                            if (!error)
+                                            {
+    
+                                            }
+                                            else
+                                            {
+                                                NSLog(@"%@", error.localizedDescription);
+                                            }
+                                        }];
+                                        [tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                            if (!error)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                NSLog(@"%@", error.localizedDescription);
+                                            }
+                                        }];
 
 }
 
