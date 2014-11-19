@@ -13,6 +13,6 @@
 @interface Tag : PFObject  <PFSubclassing>
 
 @property (nonatomic, strong) NSString *tag;
-@property (nonatomic, strong) NSArray *photos;
+//@property (nonatomic, strong) NSArray *photos;
 
 @end
