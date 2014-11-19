@@ -14,15 +14,13 @@
 
 @implementation Profile
 
-
-@dynamic objectID;
+@dynamic objectId;
 @dynamic name;
 @dynamic lowercaseName;
 @dynamic description;
 @dynamic avatarData;
-@dynamic peopleIFollow;
+@dynamic followers;
 @dynamic followings;
-@dynamic user;
 
 -(void)setNameAndCanonicalName:(NSString *)name
 {

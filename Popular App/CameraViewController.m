@@ -56,8 +56,8 @@
     PFUser *user = [PFUser currentUser];
     photo.profile = user.
 
-    PFQuery *query = [Photo query];
-    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+//    PFQuery *query = [Photo query];
+//    [query whereKey:@"user" equalTo:[PFUser currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
@@ -100,7 +100,7 @@
                                     UITextField *textFieldForTag = alert.textFields.firstObject;
                                     Tag *tag = [Tag object];
                                     tag.tag = textFieldForTag.text;
-                                    [tag.photos addObject:<#(id)#>
+//                                    [tag.photos addObject:<#(id)#>
                                 }];
     
     [alert addAction:action];

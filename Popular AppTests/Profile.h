@@ -12,14 +12,13 @@
 
 @interface Profile : PFObject  <PFSubclassing>
 
-@property (nonatomic, strong) NSString *objectID;
+@property (nonatomic, strong) NSString *objectId;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *lowercaseName;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSData *avatarData;
-@property (nonatomic, strong) NSArray *peopleIFollow;
+@property (nonatomic, strong) NSArray *followers;
 @property (nonatomic, strong) NSArray *followings;
-@property (nonatomic, strong) PFUser *user;
 
 -(void)setNameAndCanonicalName:(NSString *)name;
 
