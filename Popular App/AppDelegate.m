@@ -20,6 +20,7 @@
     // Override point for customization after application launch.
     [Parse setApplicationId:@"ZSDelA0ymCTwULzZJ9ShKLgMbtRexOjA6mMq9prl"
                   clientKey:@"dWbC11LlTCjvggadRSUrAjEukS9gBDNS4W1eQL6C"];
+  //  [PFUser logOut];
     return YES;
 }
 

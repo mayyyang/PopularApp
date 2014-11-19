@@ -32,10 +32,11 @@
 {
     [super viewDidLoad];
 
-
+    self.profile = [[PFUser currentUser] objectForKey:@"profile"];
+    
     PFQuery *q = [Profile query];
     [q includeKey:@"peopleIFollow"];
-    [q getObjectInBackgroundWithId:self.profile.objectID block:^(PFObject *object, NSError *error) {
+    [q getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
         Profile *p = (Profile *)object;
         self.followingArray = p.peopleIFollow;
         [self.activityTableView reloadData];
@@ -82,14 +83,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.activitySegementedControl.selectedSegmentIndex == 0)
-    {
-        return self.followingArray.count;
-    }
-    else
-    {
-        return self.followersArray.count;
-    }
+    return self.tempArrayForDisplay.count;
+//    if (self.activitySegementedControl.selectedSegmentIndex == 0)
+//    {
+//        return self.followingArray.count;
+//    }
+//    else
+//    {
+//        return self.followersArray.count;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
