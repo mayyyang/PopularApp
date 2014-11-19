@@ -16,9 +16,9 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *activitySegementedControl;
 @property (weak, nonatomic) IBOutlet UITableView *activityTableView;
 
-@property NSMutableArray *followingArray;
+@property NSArray *followingArray;
 @property NSMutableArray *followersArray;
-@property NSMutableArray *tempArrayForDisplay;
+@property NSArray *tempArrayForDisplay;
 
 @property NSMutableArray *followingTagArray;
 @property NSMutableArray *followersTagArray;
@@ -32,8 +32,15 @@
 {
     [super viewDidLoad];
 
-    
-    self.followersArray = @[@"a", @"b", @"c"].mutableCopy;
+
+    PFQuery *q = [Profile query];
+    [q includeKey:@"peopleIFollow"];
+    [q getObjectInBackgroundWithId:self.profile.objectID block:^(PFObject *object, NSError *error) {
+        Profile *p = (Profile *)object;
+        self.followingArray = p.peopleIFollow;
+        [self.activityTableView reloadData];
+    }];
+
     self.followingArray = @[@"d", @"f", @"g"].mutableCopy;
     //self.followersArray = [@[]mutableCopy];
 
@@ -90,7 +97,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 
     NSData *data = [NSData new];
-    cell.textLabel.text = self.tempArrayForDisplay[indexPath.row];
+    Profile *p = self.tempArrayForDisplay[indexPath.row];
+    cell.textLabel.text = p.name;
     cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
     cell.imageView.image = [UIImage imageWithData:data];
 
