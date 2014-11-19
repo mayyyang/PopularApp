@@ -35,10 +35,10 @@
     self.profile = [[PFUser currentUser] objectForKey:@"profile"];
     
     PFQuery *q = [Profile query];
-    [q includeKey:@"peopleIFollow"];
+    [q includeKey:@"followers"];
     [q getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
         Profile *p = (Profile *)object;
-        self.followingArray = p.peopleIFollow;
+        self.followingArray = p.followers;
         [self.activityTableView reloadData];
     }];
 

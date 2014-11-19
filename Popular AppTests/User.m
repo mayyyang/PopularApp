@@ -19,7 +19,7 @@
 
 + (NSString *)parseClassName
 {
-    return @"Profile";
+    return @"User";
 }
 
 @end

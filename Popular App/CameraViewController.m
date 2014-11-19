@@ -9,6 +9,7 @@
 #import "CameraViewController.h"
 #import "Photo.h"
 #import "Tag.h"
+#import "User.h"
 
 @interface CameraViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tagLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property NSData *imageData;
 
 @end
 
@@ -50,34 +52,24 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
-    NSData *imageData = UIImagePNGRepresentation(pickerImage);
+    self.imageData = UIImagePNGRepresentation(pickerImage);
     Photo *photo = [Photo object];
-    photo.imageData = imageData;
-    PFUser *user = [PFUser currentUser];
-    photo.profile = user.
+    photo.imageData = self.imageData;
 
-//    PFQuery *query = [Photo query];
-//    [query whereKey:@"user" equalTo:[PFUser currentUser]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    User *user = [User currentUser];
+    photo.profile = user.profile;
+
+    [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error)
         {
-            photo.profile = objects.firstObject;
-            [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error)
-                {
-                    self.imageView.image = pickerImage;
-                }
-                else
-                {
-                    NSLog(@"%@", error.localizedDescription);
-                }
-            }];
+            self.imageView.image = pickerImage;
         }
         else
         {
             NSLog(@"%@", error.localizedDescription);
         }
     }];
+
 
 
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -100,7 +92,9 @@
                                     UITextField *textFieldForTag = alert.textFields.firstObject;
                                     Tag *tag = [Tag object];
                                     tag.tag = textFieldForTag.text;
-//                                    [tag.photos addObject:<#(id)#>
+                                    NSMutableArray *array = [@[]mutableCopy];
+                                    [array addObject:self.imageData];
+                                    tag.photos = array;
                                 }];
     
     [alert addAction:action];
