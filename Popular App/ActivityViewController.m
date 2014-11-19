@@ -7,12 +7,19 @@
 //
 
 #import "ActivityViewController.h"
+#import <Parse/PFObject+Subclass.h>
+#import "Profile.h"
+#import "Photo.h"
+#import "Tag.h"
 
 @interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UISegmentedControl *activitySegementedControl;
 @property (weak, nonatomic) IBOutlet UITableView *activityTableView;
+
 @property NSMutableArray *followingArray;
 @property NSMutableArray *followersArray;
+@property NSMutableArray *tempArrayForDisplay;
+
 @property NSMutableArray *followingTagArray;
 @property NSMutableArray *followersTagArray;
 
@@ -23,10 +30,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.followingArray = [@[]mutableCopy];
-    self.followersArray = [@[]mutableCopy];
+    self.followersArray = @[@"a", @"b", @"c"].mutableCopy;
+    self.followingArray = @[@"d", @"f", @"g"].mutableCopy;
+    //self.followersArray = [@[]mutableCopy];
+
+    // set defualt array to dispaly
+    self.tempArrayForDisplay = self.followersArray;
+    [self.activityTableView reloadData];
 }
 
+- (IBAction)onActivitySegmentedControl:(id)sender {
+
+
+    if (self.activitySegementedControl.selectedSegmentIndex == 0){
+
+        self.tempArrayForDisplay = self.followersArray;
+
+    }else{
+
+        self.tempArrayForDisplay = self.followingArray;
+
+    }
+
+    [self.activityTableView reloadData];
+
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -43,20 +71,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if (self.activitySegementedControl.selectedSegmentIndex == 0)
-    {
-        NSData *data = [NSData new];
-        cell.textLabel.text = self.followingArray[indexPath.row];
-        cell.detailTextLabel.text = self.followingTagArray[indexPath.row];
-        cell.imageView.image = [UIImage imageWithData:data];
-    }
-    else
-    {
-        NSData *data = [NSData new];
-        cell.textLabel.text = self.followersArray[indexPath.row];
-        cell.detailTextLabel.text = self.followersTagArray[indexPath.row];
-        cell.imageView.image = [UIImage imageWithData:data];
-    }
+
+    NSData *data = [NSData new];
+    cell.textLabel.text = self.tempArrayForDisplay[indexPath.row];
+    cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
+    cell.imageView.image = [UIImage imageWithData:data];
 
     return cell;
 }

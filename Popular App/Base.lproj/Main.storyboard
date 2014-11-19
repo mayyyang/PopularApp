@@ -835,12 +835,15 @@
                     <navigationItem key="navigationItem" id="ZJG-wO-XZp">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="lAG-va-p6M">
-                            <rect key="frame" x="87.5" y="6.5" width="145" height="31"/>
+                            <rect key="frame" x="88" y="7" width="145" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Following"/>
                                 <segment title="Follower"/>
                             </segments>
+                            <connections>
+                                <action selector="onActivitySegmentedControl:" destination="poJ-eF-mNt" eventType="valueChanged" id="wDt-It-n5U"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
