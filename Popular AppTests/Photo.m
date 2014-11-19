@@ -17,7 +17,7 @@
 @dynamic imageData;
 @dynamic likeCount;
 @dynamic location;
-//@dynamic tags;
+@dynamic tag;
 
 + (void)load
 {

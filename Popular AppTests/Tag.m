@@ -11,7 +11,7 @@
 @implementation Tag
 
 @dynamic tag;
-//@dynamic photos;
+@dynamic photos;
 
 + (void)load
 {

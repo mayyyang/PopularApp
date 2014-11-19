@@ -9,6 +9,7 @@
 #import "CameraViewController.h"
 #import "Photo.h"
 #import "Tag.h"
+#import "Profile.h"
 #import "User.h"
 
 @interface CameraViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -27,8 +28,9 @@
 {
     [super viewDidLoad];
     self.photo = [Photo object];
-                                        self.tag = [Tag object];
+    self.tag = [Tag object];
 }
+
 
 - (IBAction)cameraOnButtonPressed:(UIButton *)sender
 {
@@ -51,12 +53,13 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
-    NSData *imageData = UIImageJPEGRepresentation(pickerImage, 0.1);
-
+    NSData *imageData = UIImageJPEGRepresentation(pickerImage, 0.2);
     self.photo.imageData = imageData;
+
     User *user = [User currentUser];
     Profile *profile = user[@"profile"];
     self.photo.profile = profile;
+
     self.imageView.image = pickerImage;
 
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -78,36 +81,31 @@
                                 {
                                     UITextField *textFieldForTag = alert.textFields.firstObject;
 
-                                    self.tag.tag = textFieldForTag.text;
 
-                                    PFRelation *relation = [self.tag relationForKey:@"photos"];
-                                    [relation addObject:self.photo];
+                                    self.photo.tag = textFieldForTag.text;
 
-                                    [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                        if (!error)
-                                        {
-                                            self.tagLabel.text = textFieldForTag.text;
-                                            PFRelation *relation = [self.photo relationForKey:@"tags"];
-                                            [relation addObject:self.tag];
+                                    PFQuery *query = [Tag query];
+                                    [query whereKey:@"tag" equalTo:textFieldForTag.text];
+                                    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                                        if (objects) {
+                                            self.tag = objects.firstObject;
 
-                                            [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                                if (!error)
-                                                {
+                                            NSMutableArray *photoArray = [@[]mutableCopy];
+                                            [photoArray addObject:self.photo.imageData];
 
-                                                }
-                                                else
-                                                {
-                                                    NSLog(@"%@", error.localizedDescription);
-                                                }
-                                            }];
-
+                                            self.tag.photos = photoArray;
                                         }
                                         else
                                         {
-                                            NSLog(@"%@", error.localizedDescription);
+                                            self.tag.tag = textFieldForTag.text;
+                                            NSMutableArray *photoArray = [@[]mutableCopy];
+                                            [photoArray addObject:self.photo.imageData];
+
+                                            self.tag.photos = photoArray;
+
                                         }
+                                        self.tagLabel.text = textFieldForTag.text;
                                     }];
-//
 
                                 }];
     
@@ -122,35 +120,92 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (IBAction)descriptionOnButtonPressed:(UIButton *)sender
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add a description"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField)
+     {
+         textField.placeholder = @"Description";
+     }];
+
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Add"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action)
+                             {
+                                 UITextField *textFieldForDescription = alert.textFields.firstObject;
+
+                                 self.photo.description = textFieldForDescription.text;
+
+                                 self.descriptionTextView.text = textFieldForDescription.text;
+
+                             }];
+
+    [alert addAction:action];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (IBAction)confirmOnButtonPressed:(UIButton *)sender
 {
 
-                                        [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                            if (!error)
-                                            {
+    [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error)
+        {
+
+
+            [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error)
+                {
+
+                    PFRelation *photoRelation = [self.photo relationForKey:@"tags"];
+                    [photoRelation addObject:self.tag];
+
+                    PFRelation *tagRelation = [self.tag relationForKey:@"photos"];
+                    [tagRelation addObject:self.photo];
+
+                    [self defaultDisplay];
+
+                }
+                else
+                {
+            [self Error:error];
+                }
+            }];
+        }
+        else
+        {
+            [self Error:error];
+        }
+    }];
     
-                                            }
-                                            else
-                                            {
-                                                NSLog(@"%@", error.localizedDescription);
-                                            }
-                                        }];
-                                        [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                            if (!error)
-                                            {
-
-                                            }
-                                            else
-                                            {
-                                                NSLog(@"%@", error.localizedDescription);
-                                            }
-                                        }];
-
+    
 }
 
-- (IBAction)descriptionOnButtonPressed:(UIButton *)sender
+- (void)defaultDisplay
 {
+    self.imageView.image = [UIImage imageNamed:@"image"];
+    self.tagLabel.text = @"Tagging your photo";
+    self.descriptionTextView.text = @"Talk about your photo";
+}
 
+- (void)Error:(NSError *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:error.localizedDescription
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
