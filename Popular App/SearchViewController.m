@@ -85,6 +85,17 @@
         }
 
     }
+    else
+    {
+        if (self.segmentedControl.selectedSegmentIndex == 0)
+        {
+            [self refreshDisplay:nil withClass:@"Tag" withSearchText:searchText withOrderByKey:@"tag"];
+        }
+        else
+        {
+            [self refreshDisplay:nil withClass:@"Profile" withSearchText:searchText withOrderByKey:@"lowercaseName"];
+        }
+    }
 
     [self.tableView reloadData];
 }
