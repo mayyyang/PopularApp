@@ -156,7 +156,7 @@
 //    PFQuery *query = [PFQuery queryWithClassName:class predicate:predicate]; //crash point
     PFQuery *query = [PFQuery queryWithClassName:class];
 
-    [query whereKey:orderKey hasPrefix:searchText]; //parse query format, better than predicate
+    [query whereKey:orderKey hasPrefix:[searchText lowercaseString]]; //parse query format, better than predicate
     [query orderByAscending:orderKey]; //sort query
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
