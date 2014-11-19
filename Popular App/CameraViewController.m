@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     self.photo = [Photo object];
+                                        self.tag = [Tag object];
 }
 
 - (IBAction)cameraOnButtonPressed:(UIButton *)sender
@@ -76,18 +77,18 @@
                                                       handler:^(UIAlertAction *action)
                                 {
                                     UITextField *textFieldForTag = alert.textFields.firstObject;
-                                    Tag *tag = [Tag object];
-                                    tag.tag = textFieldForTag.text;
 
-                                    PFRelation *relation = [tag relationForKey:@"photos"];
+                                    self.tag.tag = textFieldForTag.text;
+
+                                    PFRelation *relation = [self.tag relationForKey:@"photos"];
                                     [relation addObject:self.photo];
 
-                                    [tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                         if (!error)
                                         {
                                             self.tagLabel.text = textFieldForTag.text;
                                             PFRelation *relation = [self.photo relationForKey:@"tags"];
-                                            [relation addObject:tag];
+                                            [relation addObject:self.tag];
 
                                             [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                                 if (!error)
@@ -134,7 +135,7 @@
                                                 NSLog(@"%@", error.localizedDescription);
                                             }
                                         }];
-                                        [tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                        [self.tag saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                             if (!error)
                                             {
 
