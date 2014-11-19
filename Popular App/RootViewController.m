@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseUI/ParseUI.h>
+#import "Profile.h"
 
 @interface RootViewController () <UICollectionViewDataSource, UICollectionViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -28,6 +29,18 @@
     [super viewDidLoad];
     self.arrayOfRecentPhoto = [@[]mutableCopy];
     self.arrayOfPopularPhoto = [@[]mutableCopy];
+
+//    Profile *profile = [Profile object];
+//    [profile setNameAndCanonicalName:@"Kevin McQuown"];
+//    [profile save];
+//
+//    Profile *p2 = [Profile object];
+//    [p2 setNameAndCanonicalName:@"Santa Clause"];
+//    [p2 save];
+//
+//    profile.peopleIFollow = @[p2];
+//    [profile save];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -8,15 +8,27 @@
 
 #import "Profile.h"
 
+@interface Profile (PrimitiveAccessors)
+
+@end
+
 @implementation Profile
+
 
 @dynamic objectID;
 @dynamic name;
+@dynamic lowercaseName;
 @dynamic description;
 @dynamic avatarData;
-@dynamic followers;
+@dynamic peopleIFollow;
 @dynamic followings;
 @dynamic user;
+
+-(void)setNameAndCanonicalName:(NSString *)name
+{
+    self.name = name;
+    self.lowercaseName = [name lowercaseString];
+}
 
 + (void)load
 {
