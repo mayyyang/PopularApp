@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ONY-cK-CRp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ONY-cK-CRp">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -650,6 +650,8 @@
                     <connections>
                         <outlet property="segmentedControl" destination="kLd-nE-jwr" id="f91-rS-B9R"/>
                         <outlet property="tableView" destination="EyV-5w-sQB" id="fzI-1Z-yEO"/>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="tagSegue" id="b0j-1l-wmL"/>
+                        <segue destination="vCW-4K-tfI" kind="push" identifier="profileSegue" id="Ygu-s2-mny"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g80-y6-Kgw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -696,7 +698,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YYK-kL-zyJ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YYK-kL-zyJ">
                                 <rect key="frame" x="0.0" y="200" width="320" height="368"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xwg-SE-Bps">
                                     <size key="itemSize" width="150" height="150"/>
@@ -780,6 +782,7 @@
                             <constraint firstItem="L7w-U5-Bwv" firstAttribute="top" secondItem="XMD-5M-zgI" secondAttribute="bottom" constant="5" id="wtH-Fx-xXh"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="VG1-9h-KfW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="byj-MB-C7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1117,5 +1120,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="xba-fN-MOU"/>
+        <segue reference="b0j-1l-wmL"/>
     </inferredMetricsTieBreakers>
 </document>

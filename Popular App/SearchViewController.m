@@ -7,6 +7,8 @@
 //
 
 #import "SearchViewController.h"
+#import "RootViewController.h"
+#import "SearchDetailViewController.h"
 #import <Parse/Parse.h>
 #import "Tag.h"
 #import "Profile.h"
@@ -69,6 +71,38 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.segmentedControl.selectedSegmentIndex == 0)
+    {
+        Tag *tag = self.tableViewArray[indexPath.row];
+//        PFQuery *query = [Tag query];
+//        [query whereKey:@"tag" equalTo:tag];
+//        [query includeKey:@"photos"];
+//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//        {
+//            if (error)
+//            {
+//                [self errorAlertWindow:error.localizedDescription];
+//            }
+//            else
+//            {
+////                NSArray *tagPhotoArray = objects;
+//            [self performSegueWithIdentifier:@"tagSegue" sender:objects];
+//            }
+//        }];
+        [self performSegueWithIdentifier:@"tagSegue" sender:tag.photosOfTag];
+
+    }
+    else
+    {
+        Profile *profile = self.tableViewArray[indexPath.row];
+        [self performSegueWithIdentifier:@"profileSegue" sender:profile];
+
+    }
+
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;
 {
     //    searchText
@@ -85,6 +119,7 @@
         }
 
     }
+    //refreshes the table view when removing the letters
     else
     {
         if (self.segmentedControl.selectedSegmentIndex == 0)
@@ -149,6 +184,21 @@
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"😭 Mkay..." style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"tagSegue"])
+    {
+        RootViewController *rootVC = segue.destinationViewController;
+        rootVC.tagPhotoArray = sender;
+    }
+    else if ([segue.identifier isEqualToString:@"profileSegue"])
+    {
+
+    }
+
 }
 
 @end

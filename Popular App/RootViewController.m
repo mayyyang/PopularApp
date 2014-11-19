@@ -41,6 +41,11 @@
 //
 //    profile.peopleIFollow = @[p2];
 //    [profile save];
+    if (self.tagPhotoArray != nil)
+    {
+        self.arrayOfRecentPhoto = [self.tagPhotoArray mutableCopy];
+        [self.navigationItem.titleView setHidden:YES];
+    }
 
 }
 

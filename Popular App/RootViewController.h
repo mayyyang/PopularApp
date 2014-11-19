@@ -10,6 +10,7 @@
 
 @interface RootViewController : UIViewController
 
+@property NSArray *tagPhotoArray;
 
 @end
 
