@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Profile;
 
 @interface ActivityViewController : UIViewController
+@property Profile *profile;
 
 @end

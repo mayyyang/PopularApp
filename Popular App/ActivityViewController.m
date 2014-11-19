@@ -27,9 +27,12 @@
 
 @implementation ActivityViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    
     self.followersArray = @[@"a", @"b", @"c"].mutableCopy;
     self.followingArray = @[@"d", @"f", @"g"].mutableCopy;
     //self.followersArray = [@[]mutableCopy];
@@ -37,6 +40,20 @@
     // set defualt array to dispaly
     self.tempArrayForDisplay = self.followersArray;
     [self.activityTableView reloadData];
+}
+
+- (void)refreshDisplay
+{
+    PFQuery *photoQuery = [Photo query];
+    [photoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+        else
+        {
+            
+        }
+    }];
 }
 
 - (IBAction)onActivitySegmentedControl:(id)sender {
