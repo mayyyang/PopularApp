@@ -28,4 +28,20 @@
     return @"Photo";
 }
 
+- (void)saveInBackgroundWithCompletion:(savePhotoBlock)complete
+{
+    Photo *photo = [Photo object];
+    [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (!error)
+         {
+             complete(YES,nil);
+         }
+         else
+         {
+             complete(NO,error);
+         }
+     }];
+}
+
 @end

@@ -11,6 +11,9 @@
 #import "Profile.h"
 
 @class Profile;
+
+typedef void(^savePhotoBlock)(BOOL succeeded, NSError *error);
+
 @interface Photo : PFObject  <PFSubclassing>
 
 @property (nonatomic, strong) Profile *profile;
@@ -19,5 +22,7 @@
 @property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, strong) NSNumber *likeCount;
 @property (nonatomic, strong) NSString *tag;
+
+- (void) saveInBackgroundWithCompletion:(savePhotoBlock)complete;
 
 @end

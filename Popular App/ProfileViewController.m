@@ -9,6 +9,8 @@
 #import "ProfileViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "RootViewController.h"
+#import "FollowListViewController.h"
+#import "EditProfileViewController.h"
 #import <ParseUI/ParseUI.h>
 #import "User.h"
 #import "Profile.h"
@@ -24,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *followingButton;
 @property (weak, nonatomic) IBOutlet UIButton *followerButton;
 @property Profile *profile;
+@property Photo *photo;
 
 @property NSArray *arrayOfPhoto;
 
@@ -31,6 +34,7 @@
 
 @implementation ProfileViewController
 
+//MARK: life cycle of view
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,57 +43,69 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self reloadProfile];
+    [self reloadPhoto];
+}
+
+//MARK: load user's name, memo, avatar, followers count, and followings count from parse
+- (void)reloadProfile
+{
     User *user = [User currentUser];
     PFQuery *profileQuery = [Profile query];
     [profileQuery whereKey:@"objectId" equalTo:[user[@"profile"] objectId]];
     [profileQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
+    {
+        if (!error)
+        {
              self.profile = objects.firstObject;
-
              self.nameLabel.text = self.profile.name;
              self.descriptionTextView.text = self.profile.memo;
              UIImage *image = [UIImage imageWithData:self.profile.avatarData];
              self.imageView.image = image;
-             self.followerButton.titleLabel.text = [NSString stringWithFormat:@"Followers:%d",self.profile.followers.count];
-             self.followingButton.titleLabel.text = [NSString stringWithFormat:@"Followings:%d",self.profile.followings.count];
-
-         }
-         else
-         {
+             self.followerButton.titleLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+             self.followingButton.titleLabel.text = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
+        }
+        else
+        {
              [self Error:error];
-         }
-     }];
+        }
+    }];
+}
 
+//MARK: load user's photo and photo count from parse and reload collectionview
+- (void)reloadPhoto
+{
+    User *user = [User currentUser];
     PFQuery *photoQuery = [Photo query];
     [photoQuery whereKey:@"profile" equalTo:user[@"profile"]];
     [photoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
-             self.arrayOfPhoto = objects;
-             self.photoLabel.text = [NSString stringWithFormat:@"Photo:%d",self.arrayOfPhoto.count];
-             [self.collectionView reloadData];
-         }
-         else
-         {
-             [self Error:error];
-         }
-     }];
-
+    {
+        if (!error)
+        {
+            self.arrayOfPhoto = objects;
+            self.photoLabel.text = [NSString stringWithFormat:@"Photo:%lu",(unsigned long)self.arrayOfPhoto.count];
+            [self.collectionView reloadData];
+        }
+        else
+        {
+            [self Error:error];
+        }
+    }];
 }
 
-#pragma mark - UIBUTTONS
-
+//MARK: segue to followings tableview
 - (IBAction)followingListOnButtonPressed:(UIButton *)sender
 {
-    //TODO: push following list viewcontroller
+//    [self performSegueWithIdentifier:@"followingSegue" sender:sender];
 }
+
+//MARK: segue to followers tableview
 - (IBAction)followerListOnButtonPressed:(UIButton *)sender
 {
-    //TODO: push follower list viewcontroller
+//    [self performSegueWithIdentifier:@"followerSegue" sender:sender];
 }
+
+//MARK: logout user account on button pressed
 - (IBAction)logoutButton:(UIButton *)sender
 {
     [PFUser logOut];
@@ -97,59 +113,46 @@
     [self presentViewController:rootVC animated:YES completion:nil];
 }
 
-#pragma mark - UICOLLECTIONVIEW METHODS
+//MARK: pass different arrays based on different segues
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqual:@"followerSegue"])
+    {
+        FollowListViewController *flvc = segue.destinationViewController;
+        //TODO: pass data
+    }
+    else if ([segue.identifier isEqual:@"followingSegue"])
+    {
+        FollowListViewController *flvc = segue.destinationViewController;
+        //TODO: pass data
+    }
+}
 
+//MARK: delete user's photo in parse and reload collectionview
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"What do you want"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *EditAction = [UIAlertAction actionWithTitle:@"Edit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        //TODO: segue to rootdetailviewcontroller
-    }];
-    [alert addAction:EditAction];
-    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        //TODO: delete photo
-    }];
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                {
+                                    Photo *deletedPhoto = self.arrayOfPhoto[indexPath.item];
+                                    [deletedPhoto deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                    {
+                                        [self reloadPhoto];
+                                    }];
+                                }];
     [alert addAction:deleteAction];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-
-
-- (IBAction)addAvatarOnButtonPressed:(UIButton *)sender
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:picker animated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
-    NSData *imageData = UIImageJPEGRepresentation(pickerImage, 0.2);
-    self.profile.avatarData = imageData;
-    [self.profile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-
-        if (!error)
-        {
-            self.imageView.image = pickerImage;
-
-        }
-        else
-        {
-            [self Error:error];
-        }
-    }];
-
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-
+//MARK: collectionView delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.arrayOfPhoto.count;
@@ -164,6 +167,7 @@
     return cell;
 }
 
+//MARK: UIAlert
 - (void)Error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"

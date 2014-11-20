@@ -70,7 +70,7 @@
         else
         {
             self.collectionViewArray = objects;
-            self.photoCountLabel.text = [NSString stringWithFormat:@"Photos: %lu",self.collectionViewArray.count];
+            self.photoCountLabel.text = [NSString stringWithFormat:@"Photos: %lu",(unsigned long)self.collectionViewArray.count];
             [self.collectionView reloadData];
         }
 
