@@ -27,8 +27,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.photo = [Photo object];
-    self.tag = [Tag object];
 }
 
 
@@ -54,10 +52,12 @@
 {
     UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
     NSData *imageData = UIImageJPEGRepresentation(pickerImage, 0.2);
+    self.photo = [Photo object];
     self.photo.imageData = imageData;
 
     User *user = [User currentUser];
     Profile *profile = user[@"profile"];
+
     self.photo.profile = profile;
 
     self.imageView.image = pickerImage;
@@ -76,40 +76,42 @@
      }];
 
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Add"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction *action)
-                                {
-                                    UITextField *textFieldForTag = alert.textFields.firstObject;
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action)
+                             {
+                                 UITextField *textFieldForTag = alert.textFields.firstObject;
 
+                                 self.photo.tag = textFieldForTag.text;
 
-                                    self.photo.tag = textFieldForTag.text;
+                                 PFQuery *query = [Tag query];
+                                 [query whereKey:@"tag" equalTo:[textFieldForTag.text lowercaseString]];
 
-                                    PFQuery *query = [Tag query];
-                                    [query whereKey:@"tag" equalTo:textFieldForTag.text];
+                                 [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                                     if (objects.count == 0)
+                                     {
+                                         self.tag = [Tag object];
+                                         self.tag.tag = [textFieldForTag.text lowercaseString];
 
-                                    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                                        if (objects.count == 0)
-                                        {
+                                         NSMutableArray *photoArray = [@[]mutableCopy];
+                                         [photoArray addObject:self.photo.imageData];
+                                         self.tag.photosOfTag = photoArray;
+                                     }
+                                     else
+                                     {
+                                         self.tag = [Tag object];
+                                         self.tag = objects.firstObject;
+                                         self.tag.tag = [textFieldForTag.text lowercaseString];
 
+                                         NSMutableArray *photoArray = [NSMutableArray arrayWithArray:self.tag.photosOfTag];
+                                         [photoArray addObject:self.photo.imageData];
+                                         self.tag.photosOfTag = photoArray;
 
-                                            NSMutableArray *photoArray = [@[]mutableCopy];
-                                            [photoArray addObject:self.photo.imageData];
-                                            self.tag.photosOfTag = photoArray;
-                                        }
-                                        else
-                                        {
-                                            self.tag = objects.firstObject;
-                                            self.tag.tag = textFieldForTag.text;
-                                            NSMutableArray *photoArray = [NSMutableArray arrayWithArray:self.tag.photosOfTag];
-                                            [photoArray addObject:self.photo.imageData];
-                                            self.tag.photosOfTag = photoArray;
+                                     }
+                                     self.tagLabel.text = textFieldForTag.text;
+                                 }];
 
-                                        }
-                                        self.tagLabel.text = textFieldForTag.text;
-                                    }];
+                             }];
 
-                                }];
-    
     [alert addAction:action];
 
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
@@ -117,7 +119,7 @@
                                                          handler:nil];
 
     [alert addAction:cancelAction];
-    
+
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -148,9 +150,9 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:nil];
-    
+
     [alert addAction:cancelAction];
-    
+
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -179,8 +181,8 @@
             [self Error:error];
         }
     }];
-    
-    
+
+
 }
 
 - (void)defaultDisplay

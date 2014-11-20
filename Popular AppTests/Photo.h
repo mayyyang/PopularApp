@@ -18,7 +18,6 @@
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, strong) NSNumber *likeCount;
-@property (nonatomic, strong) PFGeoPoint *location;
 @property (nonatomic, strong) NSString *tag;
 
 @end
