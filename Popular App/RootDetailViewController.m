@@ -8,10 +8,23 @@
 
 #import "RootDetailViewController.h"
 
-@interface RootDetailViewController ()
+@interface RootDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
 @implementation RootDetailViewController
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //TODO: row count
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TODO: cell
+    return nil;
+}
+
 
 @end

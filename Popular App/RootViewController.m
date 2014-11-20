@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "ProfileViewController.h"
+#import "RootDetailViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseUI/ParseUI.h>
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property NSMutableArray *arrayOfRecentPhoto;
 @property NSMutableArray *arrayOfPopularPhoto;
+@property NSArray *collectionViewArray;
 
 @end
 
@@ -43,9 +45,31 @@
 //    [profile save];
     if (self.tagPhotoArray != nil)
     {
-        self.arrayOfRecentPhoto = [self.tagPhotoArray mutableCopy];
+        self.collectionViewArray = self.tagPhotoArray;
         [self.navigationItem.titleView setHidden:YES];
     }
+    else
+    {
+            PFQuery *query = [Photo query];
+            [query includeKey:@"createdAt"];
+            [query orderByAscending:@""@"createdAt"];
+            query.limit = 10;
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+            {
+                if (error)
+                {
+                    [self errorAlertWindow:error.localizedDescription];
+                }
+                else
+                {
+                    self.collectionViewArray = objects;
+                    [self.collectionView reloadData];
+                }
+
+            }];
+           
+
+        }
 
 }
 
@@ -72,6 +96,8 @@
 
 }
 
+
+
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
@@ -84,32 +110,104 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (self.segmentControl.selectedSegmentIndex == 0)
-    {
-        return self.arrayOfRecentPhoto.count;
-    }
-    else
-    {
-        return self.arrayOfPopularPhoto.count;
-    }
+//    if (self.segmentControl.selectedSegmentIndex == 0)
+//    {
+//        return self.arrayOfRecentPhoto.count;
+//    }
+//    else
+//    {
+//        return self.arrayOfPopularPhoto.count;
+//    }
+    return self.collectionViewArray.count;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    NSData *data = [NSData new];
+    Photo *photo = self.collectionViewArray[indexPath.item];
+    UIImage *image = [UIImage imageWithData:photo.imageData];
+    cell.imageView.image = image;
+
+//    NSData *data = [NSData new];
+//    if (self.segmentControl.selectedSegmentIndex == 0)
+//    {
+//        data = self.arrayOfRecentPhoto[indexPath.item];
+//    }
+//    else
+//    {
+//        data = self.arrayOfPopularPhoto[indexPath.item];
+//    }
+//    UIImage *image = [UIImage imageWithData:data];
+//    cell.imageView.image = image;
+
+    return cell;
+}
+- (IBAction)onSegmentedControlTapped:(UISegmentedControl *)sender
+{
     if (self.segmentControl.selectedSegmentIndex == 0)
     {
-        data = self.arrayOfRecentPhoto[indexPath.item];
+        PFQuery *query = [Photo query];
+        [query includeKey:@"createdAt"];
+        [query orderByAscending:@""@"createdAt"];
+        query.limit = 10;
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error)
+             {
+                 [self errorAlertWindow:error.localizedDescription];
+             }
+             else
+             {
+                 self.collectionViewArray = objects;
+                 [self.collectionView reloadData];
+             }
+
+         }];
+
+
     }
     else
     {
-        data = self.arrayOfPopularPhoto[indexPath.item];
+        PFQuery *query = [Photo query];
+        [query whereKey:@"likeCount" greaterThan:@1];
+        [query orderByAscending:@"likeCount"];
+        query.limit = 10;
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error)
+             {
+                 [self errorAlertWindow:error.localizedDescription];
+             }
+             else
+             {
+                 self.collectionViewArray = objects;
+                 [self.collectionView reloadData];
+             }
+
+         }];
+
+
     }
-    UIImage *image = [UIImage imageWithData:data];
-    cell.imageView.image = image;
-    return cell;
+
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    RootDetailViewController *detailVC = segue.destinationViewController;
+//    NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
+//    PhotoCollectionViewCell *cell = sender;
+//    NSIndexPath *indexPath = [self.collectionView indexPathsForSelectedItems].firstObject;
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
+    detailVC.photo = self.collectionViewArray[indexPath.item];
+}
+
+-(void)errorAlertWindow:(NSString *)message
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Ahtung!" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"😭 Mkay..." style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:okButton];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

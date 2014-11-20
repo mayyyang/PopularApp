@@ -91,7 +91,12 @@
 //            [self performSegueWithIdentifier:@"tagSegue" sender:objects];
 //            }
 //        }];
-        [self performSegueWithIdentifier:@"tagSegue" sender:tag.photosOfTag];
+        PFQuery *query = [Photo query];
+        [query whereKey:@"tag" equalTo:tag.tag];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        {
+            [self performSegueWithIdentifier:@"tagSegue" sender:objects];
+        }];
 
     }
     else
