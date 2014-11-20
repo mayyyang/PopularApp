@@ -688,11 +688,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7w-U5-Bwv">
-                                <rect key="frame" x="184" y="64" width="120" height="91"/>
+                                <rect key="frame" x="184" y="72" width="120" height="83"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="3rd-Rk-dlM"/>
-                                    <constraint firstAttribute="height" constant="91" id="LRm-w1-rps"/>
+                                    <constraint firstAttribute="height" constant="83" id="LRm-w1-rps"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -729,16 +729,16 @@
                                         </constraints>
                                         <size key="customSize" width="100" height="100"/>
                                         <connections>
-                                            <outlet property="imageView" destination="pS3-e2-unr" id="rxZ-A9-t8F"/>
+                                            <outlet property="imageView" destination="pS3-e2-unr" id="0eQ-ZK-iJr"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="vCW-4K-tfI" id="Ey6-EQ-mGm"/>
-                                    <outlet property="delegate" destination="vCW-4K-tfI" id="kMK-3N-dpz"/>
+                                    <outlet property="dataSource" destination="vCW-4K-tfI" id="aoU-NL-R3h"/>
+                                    <outlet property="delegate" destination="vCW-4K-tfI" id="kMf-MF-PNc"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LBD-YA-efZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBD-YA-efZ">
                                 <rect key="frame" x="26" y="165" width="70" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="C3E-ys-beo"/>
@@ -786,17 +786,17 @@
                             <constraint firstItem="nZ9-T9-GCt" firstAttribute="top" secondItem="YYK-kL-zyJ" secondAttribute="bottom" constant="-49" id="mw5-ok-5Vt"/>
                             <constraint firstItem="LBD-YA-efZ" firstAttribute="leading" secondItem="1p5-Mt-4V9" secondAttribute="leadingMargin" constant="10" id="q1S-5t-XlS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hdA-zc-wbx" secondAttribute="trailing" constant="10" id="sus-6L-3Vm"/>
-                            <constraint firstItem="L7w-U5-Bwv" firstAttribute="top" secondItem="XMD-5M-zgI" secondAttribute="bottom" constant="24" id="wtH-Fx-xXh"/>
+                            <constraint firstItem="L7w-U5-Bwv" firstAttribute="top" secondItem="XMD-5M-zgI" secondAttribute="bottom" constant="32" id="wtH-Fx-xXh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VG1-9h-KfW"/>
                     <connections>
-                        <outlet property="collectionView" destination="YYK-kL-zyJ" id="xND-GH-W4K"/>
-                        <outlet property="detailImageView" destination="ptp-Py-b6S" id="Y01-DG-g6k"/>
-                        <outlet property="detailTextView" destination="L7w-U5-Bwv" id="ube-51-V7Z"/>
-                        <outlet property="followerButton" destination="hdA-zc-wbx" id="udl-HS-E4B"/>
-                        <outlet property="followingButton" destination="VUN-9m-a8h" id="Vkp-4g-mJY"/>
-                        <outlet property="photoCountLabel" destination="LBD-YA-efZ" id="uo8-iC-THz"/>
+                        <outlet property="collectionView" destination="YYK-kL-zyJ" id="tHa-dW-zbB"/>
+                        <outlet property="detailImageView" destination="ptp-Py-b6S" id="Sd7-cL-lB8"/>
+                        <outlet property="detailTextView" destination="L7w-U5-Bwv" id="tL9-7N-7YF"/>
+                        <outlet property="followerButton" destination="hdA-zc-wbx" id="1qJ-aI-b3O"/>
+                        <outlet property="followingButton" destination="VUN-9m-a8h" id="Ey1-TI-6OE"/>
+                        <outlet property="photoCountLabel" destination="LBD-YA-efZ" id="EXe-s1-Vt8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="byj-MB-C7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
