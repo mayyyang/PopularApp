@@ -47,6 +47,8 @@
         [self.navigationItem.titleView setHidden:YES];
     }
 
+
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,7 +61,6 @@
         PFLogInViewController *logInViewController = [[PFLogInViewController alloc]init];
         [logInViewController setDelegate:self]; // Set ourselves as the delegate
 
-        // Create the sign up view controller
         PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc]init];
         [signUpViewController setDelegate:self]; // Set ourselves as the delegate
 
@@ -68,6 +69,8 @@
 
         //Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:NULL];
+
+
     }
 
 }
@@ -79,7 +82,13 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    Profile *profile = [Profile object];
+    [user setObject:profile forKey:@"profile"];
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+
+
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
