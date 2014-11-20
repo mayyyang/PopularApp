@@ -111,7 +111,7 @@
     {
         if (self.segmentedControl.selectedSegmentIndex == 0)
         {
-            [self refreshDisplay:nil withClass:@"Tag" withSearchText:searchText withOrderByKey:@"tag"];
+            [self refreshDisplay:nil withClass:@"Tag" withSearchText:[searchText lowercaseString] withOrderByKey:@"tag"];
         }
         else
         {
@@ -125,7 +125,7 @@
         [searchBar resignFirstResponder];
         if (self.segmentedControl.selectedSegmentIndex == 0)
         {
-            [self refreshDisplay:nil withClass:@"Tag" withSearchText:searchText withOrderByKey:@"tag"];
+            [self refreshDisplay:nil withClass:@"Tag" withSearchText:[searchText lowercaseString] withOrderByKey:@"tag"];
         }
         else
         {
