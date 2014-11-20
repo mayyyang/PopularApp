@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Profile.h"
 
 @interface SearchDetailViewController : UIViewController
+
+@property Profile *profile;
 
 @end

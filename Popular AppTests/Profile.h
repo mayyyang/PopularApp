@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString *objectId;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *lowercaseName;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *memo;
 @property (nonatomic, strong) NSData *avatarData;
 @property (nonatomic, strong) NSArray *followers;
 @property (nonatomic, strong) NSArray *followings;

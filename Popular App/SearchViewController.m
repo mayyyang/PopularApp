@@ -122,6 +122,7 @@
     //refreshes the table view when removing the letters
     else
     {
+        [searchBar resignFirstResponder];
         if (self.segmentedControl.selectedSegmentIndex == 0)
         {
             [self refreshDisplay:nil withClass:@"Tag" withSearchText:searchText withOrderByKey:@"tag"];
@@ -196,6 +197,8 @@
     }
     else if ([segue.identifier isEqualToString:@"profileSegue"])
     {
+        SearchDetailViewController *detailVC = segue.destinationViewController;
+        detailVC.profile = sender;
 
     }
 

@@ -17,7 +17,7 @@
 @dynamic objectId;
 @dynamic name;
 @dynamic lowercaseName;
-@dynamic description;
+@dynamic memo;
 @dynamic avatarData;
 @dynamic followers;
 @dynamic followings;
