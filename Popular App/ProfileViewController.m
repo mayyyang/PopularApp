@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *photoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followingButton;
 @property (weak, nonatomic) IBOutlet UIButton *followerButton;
+@property NSString *followersCount;
+@property NSString *followingsCount;
 @property Profile *profile;
 @property Photo *photo;
 
@@ -42,7 +44,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:YES];
     [self reloadProfile];
     [self reloadPhoto];
 }
@@ -57,13 +59,23 @@
     {
         if (!error)
         {
-             self.profile = objects.firstObject;
-             self.nameLabel.text = self.profile.name;
-             self.descriptionTextView.text = self.profile.memo;
-             UIImage *image = [UIImage imageWithData:self.profile.avatarData];
-             self.imageView.image = image;
-             self.followerButton.titleLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
-             self.followingButton.titleLabel.text = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
+            self.profile = objects.firstObject;
+            self.nameLabel.text = self.profile.name;
+            self.descriptionTextView.text = self.profile.memo;
+            if (self.profile.avatarData)
+            {
+                UIImage *image = [UIImage imageWithData:self.profile.avatarData];
+                self.imageView.image = image;
+            }
+            else
+            {
+                UIImage *image = [UIImage imageNamed:@"avatar"];
+                self.imageView.image = image;
+            }
+            self.followersCount = [NSString stringWithFormat:@"Fers:%d",self.profile.followers.count];
+            self.followerButton.titleLabel.text = self.followersCount;
+            self.followingsCount = [NSString stringWithFormat:@"Fings:%d",self.profile.followings.count];
+            self.followingButton.titleLabel.text = self.followingsCount;
         }
         else
         {
@@ -96,13 +108,13 @@
 //MARK: segue to followings tableview
 - (IBAction)followingListOnButtonPressed:(UIButton *)sender
 {
-//    [self performSegueWithIdentifier:@"followingSegue" sender:sender];
+    [self performSegueWithIdentifier:@"followListSegue" sender:self.profile.followings];
 }
 
 //MARK: segue to followers tableview
 - (IBAction)followerListOnButtonPressed:(UIButton *)sender
 {
-//    [self performSegueWithIdentifier:@"followerSegue" sender:sender];
+    [self performSegueWithIdentifier:@"followListSegue" sender:self.profile.followers];
 }
 
 //MARK: logout user account on button pressed
@@ -116,15 +128,16 @@
 //MARK: pass different arrays based on different segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqual:@"followerSegue"])
+    if ([segue.identifier isEqual:@"editSegue"])
     {
-        FollowListViewController *flvc = segue.destinationViewController;
-        //TODO: pass data
+        EditProfileViewController *epvc = segue.destinationViewController;
+        epvc.user = [User currentUser];
+        epvc.profile = self.profile;
     }
-    else if ([segue.identifier isEqual:@"followingSegue"])
+    else if ([segue.identifier isEqual:@"followListSegue"])
     {
         FollowListViewController *flvc = segue.destinationViewController;
-        //TODO: pass data
+        flvc.arrayOfFollow = sender;
     }
 }
 

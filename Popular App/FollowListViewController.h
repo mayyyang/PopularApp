@@ -10,4 +10,6 @@
 
 @interface FollowListViewController : UIViewController
 
+@property NSArray *arrayOfFollow;
+
 @end

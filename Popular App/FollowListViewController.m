@@ -7,11 +7,11 @@
 //
 
 #import "FollowListViewController.h"
+#import "Profile.h"
 
 @interface FollowListViewController ()  <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSArray *arrayOfFollow;
 
 @end
 
@@ -20,22 +20,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.arrayOfFollow = [@[]mutableCopy];
 }
 
+//MARK: tableView delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
     return self.arrayOfFollow.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-
-    NSString *text = self.arrayOfFollow[indexPath.row];
-
-    cell.textLabel.text = text;
+    PFObject *object = self.arrayOfFollow[indexPath.row];
+    PFQuery *query = [Profile query];
+    [query whereKey:@"objectId" equalTo:[object objectId]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        Profile *profile = objects.firstObject;
+        cell.textLabel.text = profile.name;
+        cell.detailTextLabel.text = profile.memo;
+        if (profile.avatarData)
+        {
+            UIImage *image = [UIImage imageWithData:profile.avatarData];
+            cell.imageView.image = image;
+        }
+        else
+        {
+            UIImage *image = [UIImage imageNamed:@"avatar"];
+            cell.imageView.image = image;
+        }
+        [self.tableView reloadData];
+    }];
     return cell;
 }
 
