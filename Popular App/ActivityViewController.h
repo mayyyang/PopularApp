@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class Profile;
+@class Photo;
 
 @interface ActivityViewController : UIViewController
 @property Profile *profile;
+@property Photo *photo;
 
 @end

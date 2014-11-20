@@ -109,8 +109,7 @@
 - (IBAction)logoutButton:(UIButton *)sender
 {
     [PFUser logOut];
-    RootViewController *rootVC = [[RootViewController alloc]init];
-    [self presentViewController:rootVC animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DidLogout" object:nil];
 }
 
 //MARK: pass different arrays based on different segues

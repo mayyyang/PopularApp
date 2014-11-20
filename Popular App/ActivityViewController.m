@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *activityTableView;
 
 @property NSArray *followingArray;
-@property NSMutableArray *followersArray;
+@property NSArray *followersArray;
 @property NSArray *tempArrayForDisplay;
 
 @property NSMutableArray *followingTagArray;
@@ -33,47 +33,65 @@
     [super viewDidLoad];
 
     self.profile = [[PFUser currentUser] objectForKey:@"profile"];
-    
+
+    [self queryForFollowing];
+    [self queryForFollowers];
+//[self queryForFollowingImages];
+
+}
+
+- (PFQuery *)queryForFollowing
+{
     PFQuery *q = [Profile query];
-    [q includeKey:@"followers"];
+    [q includeKey:@"followings"];
     [q getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
         Profile *p = (Profile *)object;
-        self.followingArray = p.followers;
+        self.followingArray = p.followings;
+
+        self.tempArrayForDisplay = self.followingArray;
         [self.activityTableView reloadData];
     }];
-
-    self.followingArray = @[@"d", @"f", @"g"].mutableCopy;
-    //self.followersArray = [@[]mutableCopy];
-
-    // set defualt array to dispaly
-    self.tempArrayForDisplay = self.followersArray;
-    [self.activityTableView reloadData];
+    return q;
 }
 
-- (void)refreshDisplay
+- (PFQuery *)queryForFollowers
 {
-    PFQuery *photoQuery = [Photo query];
-    [photoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@", error.localizedDescription);
-        }
-        else
-        {
-            
-        }
+        PFQuery *q2 = [Profile query];
+        [q2 includeKey:@"followers"];
+        [q2 getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
+            Profile *p = (Profile *)object;
+            self.followersArray = p.followers;
+    
+        }];
+    return q2;
+}
+
+
+
+- (void)queryForFollowingImages
+{
+    PFQuery *p = [Photo query];
+    //[p whereKey:<#(NSString *)#> equalTo:<#(id)#>]
+    [p findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+        Photo *pho = [objects objectAtIndex:0];
+        self.photo.imageData = pho.imageData;
+
+
     }];
 }
+
 
 - (IBAction)onActivitySegmentedControl:(id)sender {
 
 
     if (self.activitySegementedControl.selectedSegmentIndex == 0){
 
-        self.tempArrayForDisplay = self.followersArray;
+        self.tempArrayForDisplay = self.followingArray;
 
     }else{
 
-        self.tempArrayForDisplay = self.followingArray;
+        self.tempArrayForDisplay = self.followersArray;
 
     }
 
@@ -98,11 +116,23 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 
-    NSData *data = [NSData new];
+
+//    NSData *data = [NSData new];
     Profile *p = self.tempArrayForDisplay[indexPath.row];
     cell.textLabel.text = p.name;
     cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
-    cell.imageView.image = [UIImage imageWithData:data];
+
+    PFQuery *query = [Photo query];
+    [query whereKey:@"profile" equalTo:p];
+    [query orderByAscending:@"createdAt"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+        Photo *lastPhotoPosted = objects.firstObject;
+        NSData *d = lastPhotoPosted.imageData;
+        UIImage *image = [UIImage imageWithData:d];
+        cell.imageView.image = image;
+        [cell layoutSubviews];
+    }];
 
     return cell;
 }

@@ -47,6 +47,7 @@
 		FBBB8B931A1AEEF000E40A93 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B921A1AEEF000E40A93 /* CameraViewController.m */; };
 		FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */; };
 		FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */; };
+		FBE7E7241A1E9FCB00386562 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,8 @@
 		FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		FBBB8B971A1AEF3B00E40A93 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		FBE7E7221A1E9FCB00386562 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 			children = (
 				49ED21551A1BE792009EBE77 /* Model */,
 				FBBB8B6C1A1ACE3B00E40A93 /* Main.storyboard */,
+				FBE7E7221A1E9FCB00386562 /* MainTabBarController.h */,
+				FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */,
 				FBBB8B661A1ACE3B00E40A93 /* AppDelegate.h */,
 				FBBB8B671A1ACE3B00E40A93 /* AppDelegate.m */,
 				FBBB8B691A1ACE3B00E40A93 /* RootViewController.h */,
@@ -384,6 +389,7 @@
 			files = (
 				FBBB8B6B1A1ACE3B00E40A93 /* RootViewController.m in Sources */,
 				49C75D601A1B0D8D001E3156 /* EditProfileViewController.m in Sources */,
+				FBE7E7241A1E9FCB00386562 /* MainTabBarController.m in Sources */,
 				FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */,
 				49C75D631A1B152F001E3156 /* FollowListViewController.m in Sources */,
 				49ED215E1A1C30E9009EBE77 /* User.m in Sources */,
