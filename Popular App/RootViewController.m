@@ -186,6 +186,7 @@
         [query orderByDescending:@"likeCount"];
 //        [query orderByDescending:@"createdAt"];
         query.limit = 10;
+
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error)

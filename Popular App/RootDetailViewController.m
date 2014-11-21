@@ -120,6 +120,7 @@
         [likedArray removeObject:self.currentProfile.objectId];
         self.photo.profilesLiked = likedArray;
         NSString *count = [NSString stringWithFormat:@"Unliked: %lu", self.photo.profilesLiked.count];
+        self.photo.likeCount = [NSNumber numberWithInt:(int)self.photo.profilesLiked.count];
         [self.likeButton setTitle:count forState:UIControlStateNormal];
 
         [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
@@ -136,6 +137,7 @@
         [likedArray addObject:self.currentProfile.objectId];
         self.photo.profilesLiked = likedArray;
         NSString *count = [NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count];
+        self.photo.likeCount = [NSNumber numberWithInt:(int)self.photo.profilesLiked.count];
         [self.likeButton setTitle:count forState:UIControlStateNormal];
         [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
