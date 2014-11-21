@@ -21,7 +21,7 @@
     [Parse setApplicationId:@"ZSDelA0ymCTwULzZJ9ShKLgMbtRexOjA6mMq9prl"
                   clientKey:@"dWbC11LlTCjvggadRSUrAjEukS9gBDNS4W1eQL6C"];
 
-    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:185.0/255.0 green:237.0/255.0 blue:239.0/255.0 alpha:0.0]];
 
 //    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
 //    {

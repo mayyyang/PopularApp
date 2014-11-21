@@ -32,9 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:100.0/255.0 green:223.0/255.0 blue:228.0/255.0 alpha:0.0];
-
-      self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:185.0/255.0 green:237.0/255.0 blue:239.0/255.0 alpha:0.0];
 
 
     self.arrayOfRecentPhoto = [@[]mutableCopy];
