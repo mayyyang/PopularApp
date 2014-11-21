@@ -20,8 +20,6 @@
 @property NSArray *followersArray;
 @property NSArray *tempArrayForDisplay;
 
-@property NSMutableArray *followingTagArray;
-@property NSMutableArray *followersTagArray;
 
 @end
 
@@ -65,24 +63,20 @@
     return q2;
 }
 
-//- (PFQuery *)queryForTags
-//{
-//    PFQuery *q3 = [Photo query];
-//    [q3 includeKey:@"tag"];
-//    [q3 getObjectInBackgroundWithId:(NSString *) block:<#^(PFObject *object, NSError *error)block#>];
-//
-//    return q3;
-//}
+
+- (IBAction)onActivitySegmentedControl:(id)sender
+{
 
 
-- (IBAction)onActivitySegmentedControl:(id)sender {
+    if (self.activitySegementedControl.selectedSegmentIndex == 0)
 
-
-    if (self.activitySegementedControl.selectedSegmentIndex == 0){
+    {
 
         self.tempArrayForDisplay = self.followingArray;
 
-    }else{
+    }else
+
+    {
 
         self.tempArrayForDisplay = self.followersArray;
 
@@ -95,14 +89,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tempArrayForDisplay.count;
-//    if (self.activitySegementedControl.selectedSegmentIndex == 0)
-//    {
-//        return self.followingArray.count;
-//    }
-//    else
-//    {
-//        return self.followersArray.count;
-//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
