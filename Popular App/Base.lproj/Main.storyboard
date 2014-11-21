@@ -904,6 +904,7 @@
                                     <constraint firstAttribute="height" constant="30" id="PoI-mz-fSw"/>
                                     <constraint firstAttribute="width" constant="100" id="V8l-kP-jGG"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="5"/>
                                 <state key="normal" title="Library" backgroundImage="button">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -919,14 +920,14 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="m55-vS-73q"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Talk about your photo" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wxk-5L-RtT">
                                 <rect key="frame" x="16" y="426" width="253" height="58"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9C-gk-fyp">
@@ -1227,6 +1228,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="b0j-1l-wmL"/>
-        <segue reference="KaF-yG-XQO"/>
+        <segue reference="CT8-z8-y6r"/>
     </inferredMetricsTieBreakers>
 </document>
