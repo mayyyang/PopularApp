@@ -12,6 +12,7 @@
 @interface FollowListViewController ()  <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property NSArray *arrayOfFollowList;
 
 @end
 
@@ -22,20 +23,26 @@
     [super viewDidLoad];
     if (self.isFollowing == NO)
     {
+        self.arrayOfFollowList = self.profile.followers;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
+    else
+    {
+        self.arrayOfFollowList = self.profile.followings;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
 }
 
 //MARK: tableView delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.arrayOfFollow.count;
+    return self.arrayOfFollowList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    Profile *profile = self.arrayOfFollow[indexPath.row];
+    Profile *profile = self.arrayOfFollowList[indexPath.row];
     cell.textLabel.text = profile.name;
     cell.detailTextLabel.text = profile.memo;
     if (profile.avatarData)
@@ -51,21 +58,45 @@
     return cell;
 }
 
+//MARK: delete relationship of follower and following
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                                                   message:@"Are you sure you would like to delete this fing?"
+                                                                   message:@"Are you sure you would like to delete your fing?"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction *action)
                                    {
-                                       NSMutableArray *tempArray = self.arrayOfFollow;
-                                       Profile *profile = self.arrayOfFollow[indexPath.row];
-                                       [profile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                       NSMutableArray *followingArray = [self.arrayOfFollowList mutableCopy];
+                                       Profile *profile = self.arrayOfFollowList[indexPath.row];
+                                       [followingArray removeObject:profile];
+                                       self.arrayOfFollowList = followingArray;
+                                       self.profile.followings = self.arrayOfFollowList;
+                                       [self.profile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                       {
                                            if (!error)
                                            {
-                                               [self.tableView reloadData];
+                                               NSMutableArray *followerArray = [profile.followers mutableCopy];
+                                               for (PFObject *object in followerArray)
+                                               {
+                                                   if ([[object objectId] isEqual:self.profile.objectId])
+                                                   {
+                                                       [followerArray removeObject:object];
+                                                       profile.followers = followerArray;
+                                                       [profile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                                        {
+                                                            if (!error)
+                                                            {
+                                                                [self.tableView reloadData];
+                                                            }
+                                                            else
+                                                            {
+                                                                [self error:error];
+                                                            }
+                                                        }];
+                                                   }
+                                               }
                                            }
                                            else
                                            {

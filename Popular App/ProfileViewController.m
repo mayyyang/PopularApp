@@ -138,12 +138,12 @@
         FollowListViewController *flvc = segue.destinationViewController;
         if ([sender isEqual:self.profile.followings])
         {
-            flvc.arrayOfFollow = sender;
+            flvc.profile = self.profile;
             flvc.isFollowing = YES;
         }
         else
         {
-            flvc.arrayOfFollow = sender;
+            flvc.profile = self.profile;
             flvc.isFollowing = NO;
         }
     }
@@ -153,7 +153,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                                                   message:@"Are you sure you would like to delete this photo"
+                                                                   message:@"Are you sure you would like to delete your photo"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
                                                            style:UIAlertActionStyleDefault

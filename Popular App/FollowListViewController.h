@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Profile.h"
 
 @interface FollowListViewController : UIViewController
 
-@property NSArray *arrayOfFollow;
+@property Profile *profile;
 @property BOOL isFollowing;
 
 @end
