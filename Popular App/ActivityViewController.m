@@ -10,6 +10,7 @@
 #import <Parse/PFObject+Subclass.h>
 #import "Profile.h"
 #import "Photo.h"
+#import "Comment.h"
 #import "Tag.h"
 
 @interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -43,7 +44,7 @@
     self.profile = [[PFUser currentUser] objectForKey:@"profile"];
 
     [self queryForFollowing];
-    [self queryForFollowers];
+//    [self queryForFollowers];
 
 }
 
@@ -53,31 +54,87 @@
     [self.activityTableView reloadData];
 }
 
-- (PFQuery *)queryForFollowing
+- (void)queryForFollowing
 {
-    PFQuery *q = [Profile query];
-    [q includeKey:@"followings"];
-    [q getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
-        Profile *p = (Profile *)object;
-        self.followingArray = p.followings;
+    PFQuery *queryForFollowing = [Profile query];
+    [queryForFollowing includeKey:@"followings"];
+    [queryForFollowing whereKey:@"objectId" equalTo:self.profile.objectId];
+    [queryForFollowing findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
 
-        self.tempArrayForDisplay = self.followingArray;
-        [self.activityTableView reloadData];
-    }];
-    return q;
-}
+        Profile *p = objects.firstObject;
 
-- (PFQuery *)queryForFollowers
-{
-        PFQuery *q2 = [Profile query];
-        [q2 includeKey:@"followers"];
-        [q2 getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
-            Profile *p = (Profile *)object;
-            self.followersArray = p.followers;
+        PFQuery *photosQuery = [Photo query];
+            [photosQuery includeKey:@"profile"];
+        [photosQuery orderByDescending:@"createdAt"];
+        [photosQuery whereKey:@"profile" containedIn:p.followings];
+        [photosQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             self.followingArray = objects;
+             self.tempArrayForDisplay = self.followingArray;
+             [self.activityTableView reloadData];
+
+
+         }];
+
+     }];
     
-        }];
-    return q2;
+
+//    [q getObjectInBackgroundWithId:self.profile.objectId block:^(PFObject *object, NSError *error) {
+//    [q findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//
+////        Profile *p = (Profile *)object;
+//        Profile *p = objects.firstObject;
+//        self.followingArray = p.followings;
+//
+//        self.tempArrayForDisplay = self.followingArray;
+//        [self.activityTableView reloadData];
+//    }];
+//    return q;
 }
+
+- (void)queryForFollowers
+{
+    PFQuery *queryForFollowers = [Profile query];
+    [queryForFollowers includeKey:@"followers"];
+    [queryForFollowers whereKey:@"objectId" equalTo:self.profile.objectId];
+    [queryForFollowers findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+                Profile *p = objects.firstObject;
+
+        PFQuery *photosQuery = [Photo query];
+            [photosQuery includeKey:@"profile"];
+        [photosQuery orderByDescending:@"createdAt"];
+        [photosQuery whereKey:@"profile" containedIn:p.followers];
+        [photosQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             self.followersArray = objects;
+             self.tempArrayForDisplay = self.followersArray;
+             [self.activityTableView reloadData];
+             
+             
+         }];
+        
+
+    }];
+
+
+}
+
+//-(void)photosQuery:(PFQuery *)subQuery
+//{
+//    PFQuery *photosQuery = [Photo query];
+//    [photosQuery orderByDescending:@"createdAt"];
+//    [photosQuery whereKey:@"profile" matchesQuery:subQuery];
+//    [photosQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        NSLog(@"got here");
+//    }];
+//}
+
+//-(void)commentsQuery:(PFQuery *)subQuery
+//{
+//    PFQuery *commentsQuery = []
+//}
 
 
 - (IBAction)onActivitySegmentedControl:(id)sender
@@ -88,14 +145,15 @@
 
     {
 
-        self.tempArrayForDisplay = self.followingArray;
+//        self.tempArrayForDisplay = self.followingArray;
+          [self queryForFollowing];
 
     }else
 
     {
 
-        self.tempArrayForDisplay = self.followersArray;
-
+//        self.tempArrayForDisplay = self.followersArray;
+            [self queryForFollowers];
     }
 
     [self.activityTableView reloadData];
@@ -111,30 +169,36 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 
+    Photo *photo = self.tempArrayForDisplay[indexPath.row];
 
-//    NSData *data = [NSData new];
-    Profile *p = self.tempArrayForDisplay[indexPath.row];
-    cell.textLabel.text = p.name;
+    cell.imageView.image = [UIImage imageWithData:photo.imageData];
+    Profile *profile= photo.profile;
+    cell.textLabel.text = profile[@"name"];
+    cell.detailTextLabel.text = photo.tag;
 
-
-//    cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
-
-    PFQuery *query = [Photo query];
-    [query whereKey:@"profile" equalTo:p];
-    [query orderByAscending:@"createdAt"];
-
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-
-        Photo *lastPhotoPosted = objects.firstObject;
-        NSData *d = lastPhotoPosted.imageData;
-        UIImage *image = [UIImage imageWithData:d];
-        cell.imageView.image = image;
-
-        NSString *tag = lastPhotoPosted.tag;
-        cell.detailTextLabel.text = tag;
-
-        [cell layoutSubviews];
-    }];
+////    NSData *data = [NSData new];
+//    Profile *p = self.tempArrayForDisplay[indexPath.row];
+//    cell.textLabel.text = p.name;
+//
+//
+////    cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
+//
+//    PFQuery *query = [Photo query];
+//    [query whereKey:@"profile" equalTo:p];
+//    [query orderByAscending:@"createdAt"];
+//
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//
+//        Photo *lastPhotoPosted = objects.firstObject;
+//        NSData *d = lastPhotoPosted.imageData;
+//        UIImage *image = [UIImage imageWithData:d];
+//        cell.imageView.image = image;
+//
+//        NSString *tag = lastPhotoPosted.tag;
+//        cell.detailTextLabel.text = tag;
+//
+//        [cell layoutSubviews];
+//    }];
 
     return cell;
 }
