@@ -63,8 +63,8 @@
 
 }
 
-- (BOOL)isCurrentUserProfile
-{
+//- (BOOL)isCurrentUserProfile
+//{
 //    User *user = [User currentUser];
 //    PFQuery *profileQuery = [Profile query];
 //    [profileQuery includeKey:@"followers"];
@@ -85,7 +85,7 @@
 //         }
 //     }];
 //    return NO;
-}
+//}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -135,10 +135,10 @@
      {
          if (!error)
          {
-             self.currentUserProfile = (Profile *)object;
-             NSMutableArray *followingArray = [@[]mutableCopy];
-             followingArray = [profile.followings mutableCopy];
-             [followingArray addObject:self.profile];
+//             self.currentUserProfile = (Profile *)object;
+//             NSMutableArray *followingArray = [@[]mutableCopy];
+//             followingArray = [profile.followings mutableCopy];
+//             [followingArray addObject:self.profile];
 
 
 
