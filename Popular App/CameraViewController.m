@@ -143,13 +143,13 @@
                 }
                 else
                 {
-                    [self Error:error];
+                    [self error:error];
                 }
             }];
         }
         else
         {
-            [self Error:error];
+            [self error:error];
         }
     }];
 }
@@ -164,7 +164,7 @@
 }
 
 //MARK: UIAlert
-- (void)Error:(NSError *)error
+- (void)error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error.localizedDescription

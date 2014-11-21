@@ -48,7 +48,6 @@
         UIImage *image = [UIImage imageNamed:@"avatar"];
         self.imageView.image = image;
     }
-    self.navigationItem.title = self.user.username;
     self.emailTextField.text = self.user.email;
     self.passwordTextField.text = self.user.password;
 }
@@ -87,7 +86,7 @@
          }
          else
          {
-             [self Error:error];
+             [self error:error];
          }
      }];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -116,19 +115,19 @@
                   }
                   else
                   {
-                      [self Error:error];
+                      [self error:error];
                   }
               }];
          }
          else
          {
-             [self Error:error];
+             [self error:error];
          }
      }];
 }
 
 //MARK: UIAlert
-- (void)Error:(NSError *)error
+- (void)error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error.localizedDescription

@@ -20,7 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UILabel *photoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followingButton;
@@ -44,7 +43,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewDidAppear:animated];
     [self reloadProfile];
     [self reloadPhoto];
 }
@@ -54,13 +53,14 @@
 {
     User *user = [User currentUser];
     PFQuery *profileQuery = [Profile query];
-    [profileQuery whereKey:@"objectId" equalTo:[user[@"profile"] objectId]];
-    [profileQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    [profileQuery includeKey:@"followers"];
+    [profileQuery includeKey:@"followings"];
+    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
     {
         if (!error)
         {
-            self.profile = objects.firstObject;
-            self.nameLabel.text = self.profile.name;
+            self.profile = (Profile *)object;
+            self.navigationItem.title = self.profile.name;
             self.descriptionTextView.text = self.profile.memo;
             if (self.profile.avatarData)
             {
@@ -72,14 +72,14 @@
                 UIImage *image = [UIImage imageNamed:@"avatar"];
                 self.imageView.image = image;
             }
-            self.followersCount = [NSString stringWithFormat:@"Fers:%d",self.profile.followers.count];
-            self.followerButton.titleLabel.text = self.followersCount;
-            self.followingsCount = [NSString stringWithFormat:@"Fings:%d",self.profile.followings.count];
-            self.followingButton.titleLabel.text = self.followingsCount;
+            self.followersCount = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+            [self.followerButton setTitle:self.followersCount forState:UIControlStateNormal];
+            self.followingsCount = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
+            [self.followingButton setTitle:self.followingsCount forState:UIControlStateNormal];
         }
         else
         {
-             [self Error:error];
+             [self error:error];
         }
     }];
 }
@@ -100,9 +100,17 @@
         }
         else
         {
-            [self Error:error];
+            [self error:error];
         }
     }];
+}
+
+//MARK: logout user account on button pressed
+- (IBAction)logoutButton:(UIButton *)sender
+{
+    [PFUser logOut];
+    RootViewController *rootVC = [[RootViewController alloc]init];
+    [self presentViewController:rootVC animated:YES completion:nil];
 }
 
 //MARK: segue to followings tableview
@@ -117,14 +125,6 @@
     [self performSegueWithIdentifier:@"followListSegue" sender:self.profile.followers];
 }
 
-//MARK: logout user account on button pressed
-- (IBAction)logoutButton:(UIButton *)sender
-{
-    [PFUser logOut];
-    RootViewController *rootVC = [[RootViewController alloc]init];
-    [self presentViewController:rootVC animated:YES completion:nil];
-}
-
 //MARK: pass different arrays based on different segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -137,15 +137,24 @@
     else if ([segue.identifier isEqual:@"followListSegue"])
     {
         FollowListViewController *flvc = segue.destinationViewController;
-        flvc.arrayOfFollow = sender;
+        if ([sender isEqual:self.profile.followings])
+        {
+            flvc.arrayOfFollow = sender;
+            flvc.isFollowing = YES;
+        }
+        else
+        {
+            flvc.arrayOfFollow = sender;
+            flvc.isFollowing = NO;
+        }
     }
 }
 
 //MARK: delete user's photo in parse and reload collectionview
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"What do you want"
-                                                                   message:nil
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                                                   message:@"Are you sure you would like to delete this photo"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
                                                            style:UIAlertActionStyleDefault
@@ -154,7 +163,14 @@
                                     Photo *deletedPhoto = self.arrayOfPhoto[indexPath.item];
                                     [deletedPhoto deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                                     {
-                                        [self reloadPhoto];
+                                        if (!error)
+                                        {
+                                            [self reloadPhoto];
+                                        }
+                                        else
+                                        {
+                                            [self error:error];
+                                        }
                                     }];
                                 }];
     [alert addAction:deleteAction];
@@ -181,7 +197,7 @@
 }
 
 //MARK: UIAlert
-- (void)Error:(NSError *)error
+- (void)error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error.localizedDescription

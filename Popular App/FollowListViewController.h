@@ -11,5 +11,6 @@
 @interface FollowListViewController : UIViewController
 
 @property NSArray *arrayOfFollow;
+@property BOOL isFollowing;
 
 @end
