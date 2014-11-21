@@ -14,6 +14,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseUI/ParseUI.h>
 #import "Profile.h"
+#import "LoginViewController.h"
 
 @interface RootViewController () <UICollectionViewDataSource, UICollectionViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -81,9 +82,10 @@
 
     if (![PFUser currentUser]) // No user logged in
     {
-        // Create the log in view controller
-        PFLogInViewController *logInViewController = [[PFLogInViewController alloc]init];
+        // Instantiate our custom login view controller
+        LoginViewController *logInViewController = [[LoginViewController alloc]init];
         [logInViewController setDelegate:self]; // Set ourselves as the delegate
+        logInViewController.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
 
         PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc]init];
         [signUpViewController setDelegate:self]; // Set ourselves as the delegate
@@ -101,7 +103,7 @@
 
 
 
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user
+- (void)logInViewController:(LoginViewController *)logInController didLogInUser:(PFUser *)user
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
