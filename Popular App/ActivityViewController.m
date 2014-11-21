@@ -8,6 +8,7 @@
 
 #import "ActivityViewController.h"
 #import <Parse/PFObject+Subclass.h>
+#import "RootDetailViewController.h"
 #import "Profile.h"
 #import "Photo.h"
 #import "Comment.h"
@@ -68,6 +69,7 @@
             [photosQuery includeKey:@"profile"];
         [photosQuery orderByDescending:@"createdAt"];
         [photosQuery whereKey:@"profile" containedIn:p.followings];
+        photosQuery.limit = 17;
         [photosQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              self.followingArray = objects;
@@ -174,7 +176,17 @@
     cell.imageView.image = [UIImage imageWithData:photo.imageData];
     Profile *profile= photo.profile;
     cell.textLabel.text = profile[@"name"];
-    cell.detailTextLabel.text = photo.tag;
+    if (photo.tag)
+    {
+    NSString *detail = [NSString stringWithFormat:@"added photo with # %@", photo.tag];
+    cell.detailTextLabel.text = detail;
+    }
+    else
+    {
+        cell.detailTextLabel.text = @"added a photo without #";
+    }
+
+
 
 ////    NSData *data = [NSData new];
 //    Profile *p = self.tempArrayForDisplay[indexPath.row];
@@ -201,5 +213,12 @@
 //    }];
 
     return cell;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    RootDetailViewController *detailVC = segue.destinationViewController;
+    NSIndexPath *indexPath = [self.activityTableView indexPathForCell:sender];
+    detailVC.photo = self.tempArrayForDisplay[indexPath.row];
 }
 @end
