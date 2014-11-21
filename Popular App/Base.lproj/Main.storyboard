@@ -67,7 +67,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WRn-SC-g5Y">
-                                <rect key="frame" x="0.0" y="339" width="320" height="180"/>
+                                <rect key="frame" x="0.0" y="333" width="320" height="186"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="Fvz-4B-Iq7" detailTextLabel="r0A-Id-Zg7" style="IBUITableViewCellStyleSubtitle" id="Glb-de-cnN">
@@ -101,7 +101,7 @@
                                 <rect key="frame" x="0.0" y="301" width="320" height="30"/>
                                 <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="commentTextField:" destination="m7T-j1-UDo" eventType="editingDidEnd" id="JqQ-Cp-oZw"/>
@@ -140,7 +140,7 @@
                             <constraint firstItem="Yep-NE-a20" firstAttribute="leading" secondItem="EDy-fb-uz1" secondAttribute="leadingMargin" constant="-16" id="bay-V4-t2b"/>
                             <constraint firstItem="o2l-Fc-yNa" firstAttribute="leading" secondItem="gWs-Bw-T6g" secondAttribute="trailing" constant="15" id="dqE-A4-cUB"/>
                             <constraint firstItem="Yep-NE-a20" firstAttribute="top" secondItem="tvI-M9-WeC" secondAttribute="bottom" id="fnh-wm-I4J"/>
-                            <constraint firstItem="WRn-SC-g5Y" firstAttribute="top" secondItem="B8M-oM-hY7" secondAttribute="bottom" constant="8" id="hCJ-yp-MZt"/>
+                            <constraint firstItem="WRn-SC-g5Y" firstAttribute="top" secondItem="B8M-oM-hY7" secondAttribute="bottom" constant="2" id="hCJ-yp-MZt"/>
                             <constraint firstItem="vRd-Wb-0Zm" firstAttribute="top" secondItem="Yep-NE-a20" secondAttribute="bottom" constant="5" id="tm3-uZ-so6"/>
                             <constraint firstItem="B8M-oM-hY7" firstAttribute="top" secondItem="o2l-Fc-yNa" secondAttribute="bottom" constant="2" id="vvN-rG-1q0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="B8M-oM-hY7" secondAttribute="trailing" constant="-16" id="xKq-Sh-MUU"/>
@@ -565,9 +565,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="cPi-7X-Hxc">
-                                <rect key="frame" x="0.0" y="170" width="320" height="308"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jMW-d3-Kx8">
                                 <rect key="frame" x="110" y="483" width="100" height="30"/>
                                 <constraints>
@@ -610,6 +607,9 @@
                                     <outlet property="delegate" destination="33r-mA-V6F" id="eHE-2v-XLf"/>
                                 </connections>
                             </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="cPi-7X-Hxc">
+                                <rect key="frame" x="0.0" y="170" width="320" height="308"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
