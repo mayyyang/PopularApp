@@ -17,7 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *commentTextField;
 @property (strong, nonatomic) NSMutableArray *commentArray;
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;
-
+@property Profile *currentProfile;
 @end
 
 @implementation RootDetailViewController
@@ -29,10 +29,39 @@
 
     self.commentTextField.delegate = self;
 
+    PFUser *currentUser = [PFUser currentUser];
+    self.currentProfile = currentUser[@"profile"];
+
     self.imageView.image = [UIImage imageWithData:self.photo.imageData];
-    [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %@", self.photo.likeCount] forState:UIControlStateNormal];
+
+//    [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %@", self.photo.likeCount] forState:UIControlStateNormal];
+    if (self.photo.profilesLiked.count == 0)
+    {
+        self.photo.profilesLiked = [NSArray new];
+    }
+    if ([self checkForLike])
+    {
+        [self.likeButton setTitle:[NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %lu", self.photo.profilesLiked.count] forState:UIControlStateNormal];
+    }
     [self loadCommentsByPhoto:self.photo];
 
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+
+//    [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//     {
+//         if (error)
+//         {
+//             [self errorAlertWindow:error.localizedDescription];
+//         }
+//     }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -76,15 +105,88 @@
 
 - (IBAction)onLikeButtonPressed:(UIButton *)sender
 {
-    self.photo.likeCount = [NSNumber numberWithInt:[self.photo.likeCount intValue] + 1];
-    [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %@", self.photo.likeCount] forState:UIControlStateNormal];
-    [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//    self.photo.likeCount = [NSNumber numberWithInt:[self.photo.likeCount intValue] + 1];
+//    [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %@", self.photo.likeCount] forState:UIControlStateNormal];
+//    [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//    {
+//        if (error)
+//        {
+//            [self errorAlertWindow:error.localizedDescription];
+//        }
+//    }];
+     if ([self checkForLike])
     {
-        if (error)
+        NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
+        [likedArray removeObject:self.currentProfile.objectId];
+        self.photo.profilesLiked = likedArray;
+        NSString *count = [NSString stringWithFormat:@"Unliked: %lu", self.photo.profilesLiked.count];
+        [self.likeButton setTitle:count forState:UIControlStateNormal];
+
+        [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (error)
+             {
+                 [self errorAlertWindow:error.localizedDescription];
+             }
+         }];
+    }
+    else
+    {
+        NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
+        [likedArray addObject:self.currentProfile.objectId];
+        self.photo.profilesLiked = likedArray;
+        NSString *count = [NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count];
+        [self.likeButton setTitle:count forState:UIControlStateNormal];
+        [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (error)
+             {
+                 [self errorAlertWindow:error.localizedDescription];
+             }
+         }];
+    }
+}
+
+-(BOOL)checkForLike
+{
+    BOOL isLiked = NO;
+    for (int i=0; i<self.photo.profilesLiked.count; i++)
+    {
+        if ([self.photo.profilesLiked[i] isEqualToString:self.currentProfile.objectId])
         {
-            [self errorAlertWindow:error.localizedDescription];
+//            NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
+//            [likedArray removeObject:self.currentProfile.objectId];
+//            self.photo.profilesLiked = likedArray;
+//            NSString *count = [NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count];
+//            [self.likeButton setTitle:count forState:UIControlStateNormal];
+//
+//            [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//             {
+//                 if (error)
+//                 {
+//                     [self errorAlertWindow:error.localizedDescription];
+//                 }
+//             }];
+            isLiked = YES;
+            break;
         }
-    }];
+//        else if (i == (self.photo.profilesLiked.count - 1))
+//        {
+//            NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
+//            [likedArray addObject:self.currentProfile.objectId];
+//            self.photo.profilesLiked = likedArray;
+//            NSString *count = [NSString stringWithFormat:@"Like: %lu", self.photo.profilesLiked.count];
+//            [self.likeButton setTitle:count forState:UIControlStateNormal];
+//            [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+//             {
+//                 if (error)
+//                 {
+//                     [self errorAlertWindow:error.localizedDescription];
+//                 }
+//             }];
+//        }
+    }
+    return isLiked;
 }
 
 - (IBAction)onFavoriteButtonPressed:(UIButton *)sender

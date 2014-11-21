@@ -21,6 +21,7 @@ typedef void(^savePhotoBlock)(BOOL succeeded, NSError *error);
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSData *imageData;
 @property (nonatomic, strong) NSNumber *likeCount;
+@property (nonatomic, strong) NSArray *profilesLiked;
 @property (nonatomic, strong) NSString *tag;
 
 - (void) saveInBackgroundWithCompletion:(savePhotoBlock)complete;

@@ -16,6 +16,7 @@
 @dynamic description;
 @dynamic imageData;
 @dynamic likeCount;
+@dynamic profilesLiked;
 @dynamic tag;
 
 + (void)load
