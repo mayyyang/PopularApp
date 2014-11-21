@@ -8,6 +8,7 @@
 
 #import "SearchDetailViewController.h"
 #import "PhotoCollectionViewCell.h"
+#import "RootDetailViewController.h"
 #import "Photo.h"
 #import "User.h"
 #import <Parse/Parse.h>
@@ -15,8 +16,8 @@
 
 @interface SearchDetailViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *followingButton;
-@property (strong, nonatomic) IBOutlet UILabel *photoCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fersCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *photoCountButton;
+@property (weak, nonatomic) IBOutlet UIButton *fersCountButton;
 @property (strong, nonatomic) IBOutlet UIImageView *detailImageView;
 @property (strong, nonatomic) IBOutlet UITextView *detailTextView;
 @property (strong, nonatomic) NSArray *collectionViewArray;
@@ -55,7 +56,7 @@
     }
     self.detailTextView.text = self.profile.memo;
 
-    self.fersCountLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+    [self.fersCountButton setTitle:[NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count] forState:UIControlStateNormal];
 
     self.followingsCount = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
 
@@ -124,7 +125,7 @@
         else
         {
             self.collectionViewArray = objects;
-            self.photoCountLabel.text = [NSString stringWithFormat:@"Photos: %lu",(unsigned long)self.collectionViewArray.count];
+            [self.photoCountButton setTitle:[NSString stringWithFormat:@"Photos: %lu",(unsigned long)self.collectionViewArray.count] forState:UIControlStateNormal];
             [self.collectionView reloadData];
         }
 
@@ -168,7 +169,7 @@
             {
                 if (!error)
                 {
-                    self.fersCountLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+                    [self.fersCountButton setTitle:[NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count] forState:UIControlStateNormal];
                     self.followingButton.enabled = NO;
                 }
                 else
@@ -182,7 +183,18 @@
             [self errorAlertWindow:error.localizedDescription];
         }
     }];
+}
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+     Photo *selectedPhoto = self.collectionViewArray[indexPath.item];
+     [self performSegueWithIdentifier:@"photoSegue" sender:selectedPhoto];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    RootDetailViewController *rdvc = segue.destinationViewController;
+    rdvc.photo = sender;
 
 }
 

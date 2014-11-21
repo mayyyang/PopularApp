@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
-@property (weak, nonatomic) IBOutlet UILabel *photoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *photoButton;
 @property (weak, nonatomic) IBOutlet UIButton *followingButton;
 @property (weak, nonatomic) IBOutlet UIButton *followerButton;
 @property NSString *followersCount;
@@ -95,7 +95,7 @@
         if (!error)
         {
             self.arrayOfPhoto = objects;
-            self.photoLabel.text = [NSString stringWithFormat:@"Photo:%lu",(unsigned long)self.arrayOfPhoto.count];
+            [self.photoButton setTitle:[NSString stringWithFormat:@"Photo:%lu",(unsigned long)self.arrayOfPhoto.count] forState:UIControlStateNormal];
             [self.collectionView reloadData];
         }
         else

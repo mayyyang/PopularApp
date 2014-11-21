@@ -41,11 +41,11 @@
     }
     if ([self checkForLike])
     {
-        [self.likeButton setTitle:[NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count] forState:UIControlStateNormal];
+        [self.likeButton setTitle:[NSString stringWithFormat:@"Liked: %lu", (unsigned long)self.photo.profilesLiked.count] forState:UIControlStateNormal];
     }
     else
     {
-        [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %lu", self.photo.profilesLiked.count] forState:UIControlStateNormal];
+        [self.likeButton setTitle:[NSString stringWithFormat:@"Likes: %lu", (unsigned long)self.photo.profilesLiked.count] forState:UIControlStateNormal];
     }
     [self loadCommentsByPhoto:self.photo];
 
@@ -119,7 +119,7 @@
         NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
         [likedArray removeObject:self.currentProfile.objectId];
         self.photo.profilesLiked = likedArray;
-        NSString *count = [NSString stringWithFormat:@"Unliked: %lu", self.photo.profilesLiked.count];
+        NSString *count = [NSString stringWithFormat:@"Unliked: %lu", (unsigned long)self.photo.profilesLiked.count];
         self.photo.likeCount = [NSNumber numberWithInt:(int)self.photo.profilesLiked.count];
         [self.likeButton setTitle:count forState:UIControlStateNormal];
 
@@ -136,7 +136,7 @@
         NSMutableArray *likedArray = [self.photo.profilesLiked mutableCopy];
         [likedArray addObject:self.currentProfile.objectId];
         self.photo.profilesLiked = likedArray;
-        NSString *count = [NSString stringWithFormat:@"Liked: %lu", self.photo.profilesLiked.count];
+        NSString *count = [NSString stringWithFormat:@"Liked: %lu", (unsigned long)self.photo.profilesLiked.count];
         self.photo.likeCount = [NSNumber numberWithInt:(int)self.photo.profilesLiked.count];
         [self.likeButton setTitle:count forState:UIControlStateNormal];
         [self.photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
