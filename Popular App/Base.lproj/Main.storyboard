@@ -223,7 +223,7 @@
                     <navigationItem key="navigationItem" id="mTx-VD-XHM">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Rzy-jV-5hy">
-                            <rect key="frame" x="59.5" y="6" width="201" height="32"/>
+                            <rect key="frame" x="60" y="6" width="201" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Recent photo"/>
@@ -702,7 +702,7 @@
                     <navigationItem key="navigationItem" id="GMV-oj-919">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="kLd-nE-jwr">
-                            <rect key="frame" x="32.5" y="5" width="255" height="34"/>
+                            <rect key="frame" x="33" y="5" width="255" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Search photo tag"/>
@@ -784,7 +784,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUN-9m-a8h">
-                                <rect key="frame" x="112.5" y="224" width="95" height="30"/>
+                                <rect key="frame" x="113" y="224" width="95" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="1lY-9e-Tdu"/>
                                     <constraint firstAttribute="width" constant="95" id="XMp-Of-w5F"/>
@@ -1071,7 +1071,7 @@
                     <navigationItem key="navigationItem" id="ZJG-wO-XZp">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="lAG-va-p6M">
-                            <rect key="frame" x="12.5" y="6" width="295" height="32"/>
+                            <rect key="frame" x="13" y="6" width="295" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="People I follow"/>
@@ -1116,10 +1116,10 @@
         <!--Home-->
         <scene sceneID="dZ1-JZ-dmp">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hui-BP-RhL" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hui-BP-RhL" customClass="CustomUINavigationBar" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="ef3-cM-Ywr"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3Zz-Zk-0ig">
+                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" id="3Zz-Zk-0ig">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1227,7 +1227,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="b0j-1l-wmL"/>
-        <segue reference="CT8-z8-y6r"/>
+        <segue reference="NLQ-f8-jd0"/>
+        <segue reference="d0b-vm-7PH"/>
     </inferredMetricsTieBreakers>
 </document>
