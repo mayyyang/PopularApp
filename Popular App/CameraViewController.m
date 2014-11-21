@@ -61,7 +61,6 @@
     User *user = [User currentUser];
     Profile *profile = user[@"profile"];
     self.photo.profile = profile;
-    self.photo.likeCount = 0;
     self.imageView.image = pickerImage;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -90,6 +89,10 @@
                                      {
                                          self.tag = [Tag object];
                                          self.tag.tag = [textFieldForTag.text lowercaseString];
+                                         self.tagLabel.text = [textFieldForTag.text lowercaseString];
+                                     }
+                                     else
+                                     {
                                          self.tagLabel.text = [textFieldForTag.text lowercaseString];
                                      }
                                  }];
