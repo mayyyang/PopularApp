@@ -31,12 +31,14 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    self.collectionViewArray = @[];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.collectionViewArray = @[];
+
+    [self updateCurrentUserProfile];
 
     [self loadImagesFromProfile:self.profile];
 
@@ -59,33 +61,39 @@
 
     [self.followingButton setTitle:self.followingsCount forState:UIControlStateNormal];
 
-
-
 }
 
-//- (BOOL)isCurrentUserProfile
-//{
-//    User *user = [User currentUser];
-//    PFQuery *profileQuery = [Profile query];
-//    [profileQuery includeKey:@"followers"];
-//    [profileQuery includeKey:@"followings"];
-//    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
-//     {
-//         if (!error)
-//         {
-//            self.currentUserProfile = (Profile *)object;
-//             if (self.profile isEqual:self.currentUserProfile)
-//             {
-//                 return YES;
-//             }
-//         }
-//         else
-//         {
-//             [self errorAlertWindow:error.localizedDescription];
-//         }
-//     }];
-//    return NO;
-//}
+- (void)updateCurrentUserProfile
+{
+    User *user = [User currentUser];
+    PFQuery *profileQuery = [Profile query];
+    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
+     {
+         if (!error)
+         {
+            self.currentUserProfile = (Profile *)object;
+             NSMutableArray *array = [@[]mutableCopy];
+             for (PFObject *object in self.profile.followers)
+             {
+                 [array addObject:object.objectId];
+             }
+             if ([array containsObject:self.currentUserProfile.objectId])
+             {
+                 self.followingButton.enabled = NO;
+             }
+
+             if ([self.profile.objectId isEqual: self.currentUserProfile.objectId])
+             {
+                 self.followingButton.enabled = NO;
+             }
+         }
+         else
+         {
+             [self errorAlertWindow:error.localizedDescription];
+         }
+     }];
+}
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -127,30 +135,43 @@
 
 - (IBAction)followingOnButtonPressed:(UIButton *)sender
 {
-    User *user = [User currentUser];
-    PFQuery *profileQuery = [Profile query];
-    [profileQuery includeKey:@"followers"];
-    [profileQuery includeKey:@"followings"];
-    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
-     {
-         if (!error)
-         {
-//             self.currentUserProfile = (Profile *)object;
-//             NSMutableArray *followingArray = [@[]mutableCopy];
-//             followingArray = [profile.followings mutableCopy];
-//             [followingArray addObject:self.profile];
+    PFObject *followingObject = [PFObject objectWithoutDataWithClassName:@"Profile" objectId:self.profile.objectId];
+    NSMutableArray *followingArray = [@[]mutableCopy];
+    followingArray = [self.currentUserProfile.followings mutableCopy];
+    [followingArray addObject:followingObject];
+    self.currentUserProfile.followings = followingArray;
+
+    PFObject *followerObject = [PFObject objectWithoutDataWithClassName:@"Profile" objectId:self.currentUserProfile.objectId];
+    NSMutableArray *followerArray = [@[]mutableCopy];
+    followerArray = [self.profile.followers mutableCopy];
+    [followerArray addObject:followerObject];
+    self.profile.followers = followerArray;
+
+    [self.currentUserProfile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    {
+        if (!error)
+        {
+            [self.profile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+            {
+                if (!error)
+                {
+                    self.followingsCount = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
+
+                    [self.followingButton setTitle:self.followingsCount forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [self errorAlertWindow:error.localizedDescription];
+                }
+            }];
+        }
+        else
+        {
+            [self errorAlertWindow:error.localizedDescription];
+        }
+    }];
 
 
-
-
-
-
-         }
-         else
-         {
-             [self errorAlertWindow:error.localizedDescription];
-         }
-     }];
 }
 
 -(void)errorAlertWindow:(NSString *)message
