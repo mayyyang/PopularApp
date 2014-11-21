@@ -36,7 +36,6 @@
 
     [self queryForFollowing];
     [self queryForFollowers];
-//[self queryForFollowingImages];
 
 }
 
@@ -66,20 +65,14 @@
     return q2;
 }
 
-
-
-- (void)queryForFollowingImages
-{
-    PFQuery *p = [Photo query];
-    //[p whereKey:<#(NSString *)#> equalTo:<#(id)#>]
-    [p findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-
-        Photo *pho = [objects objectAtIndex:0];
-        self.photo.imageData = pho.imageData;
-
-
-    }];
-}
+//- (PFQuery *)queryForTags
+//{
+//    PFQuery *q3 = [Photo query];
+//    [q3 includeKey:@"tag"];
+//    [q3 getObjectInBackgroundWithId:(NSString *) block:<#^(PFObject *object, NSError *error)block#>];
+//
+//    return q3;
+//}
 
 
 - (IBAction)onActivitySegmentedControl:(id)sender {
@@ -120,17 +113,24 @@
 //    NSData *data = [NSData new];
     Profile *p = self.tempArrayForDisplay[indexPath.row];
     cell.textLabel.text = p.name;
-    cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
+
+
+//    cell.detailTextLabel.text = self.tempArrayForDisplay[indexPath.row];
 
     PFQuery *query = [Photo query];
     [query whereKey:@"profile" equalTo:p];
     [query orderByAscending:@"createdAt"];
+
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
         Photo *lastPhotoPosted = objects.firstObject;
         NSData *d = lastPhotoPosted.imageData;
         UIImage *image = [UIImage imageWithData:d];
         cell.imageView.image = image;
+
+        NSString *tag = lastPhotoPosted.tag;
+        cell.detailTextLabel.text = tag;
+
         [cell layoutSubviews];
     }];
 
