@@ -137,16 +137,29 @@
 {
     PFObject *followingObject = [PFObject objectWithoutDataWithClassName:@"Profile" objectId:self.profile.objectId];
     NSMutableArray *followingArray = [@[]mutableCopy];
-    followingArray = [self.currentUserProfile.followings mutableCopy];
-    [followingArray addObject:followingObject];
-    self.currentUserProfile.followings = followingArray;
+    if (self.currentUserProfile.followings.count == 0)
+    {
+        self.currentUserProfile.followings = @[followingObject];
+    }
+    else
+    {
+        followingArray = [self.currentUserProfile.followings mutableCopy];
+        [followingArray addObject:followingObject];
+        self.currentUserProfile.followings = followingArray;
+    }
 
     PFObject *followerObject = [PFObject objectWithoutDataWithClassName:@"Profile" objectId:self.currentUserProfile.objectId];
     NSMutableArray *followerArray = [@[]mutableCopy];
-    followerArray = [self.profile.followers mutableCopy];
-    [followerArray addObject:followerObject];
-    self.profile.followers = followerArray;
-
+    if (self.profile.followers.count == 0)
+    {
+        self.profile.followers = @[followerObject];
+    }
+    else
+    {
+        followerArray = [self.profile.followers mutableCopy];
+        [followerArray addObject:followerObject];
+        self.profile.followers = followerArray;
+    }
     [self.currentUserProfile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         if (!error)
@@ -155,9 +168,8 @@
             {
                 if (!error)
                 {
-                    self.followingsCount = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
-
-                    [self.followingButton setTitle:self.followingsCount forState:UIControlStateNormal];
+                    self.fersCountLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+                    self.followingButton.enabled = NO;
                 }
                 else
                 {
