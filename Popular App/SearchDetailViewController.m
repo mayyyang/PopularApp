@@ -9,17 +9,20 @@
 #import "SearchDetailViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "Photo.h"
+#import "User.h"
 #import <Parse/Parse.h>
 
 
 @interface SearchDetailViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *followingButton;
-@property (strong, nonatomic) IBOutlet UIButton *followerButton;
 @property (strong, nonatomic) IBOutlet UILabel *photoCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fersCountLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *detailImageView;
 @property (strong, nonatomic) IBOutlet UITextView *detailTextView;
 @property (strong, nonatomic) NSArray *collectionViewArray;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property NSString *followingsCount;
+@property Profile *currentUserProfile;
 
 @end
 
@@ -28,16 +31,60 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     self.collectionViewArray = @[];
 
     [self loadImagesFromProfile:self.profile];
 
     self.navigationItem.title = self.profile.name;
-    self.detailImageView.image = [UIImage imageWithData:self.profile.avatarData];
+    if (self.profile.avatarData)
+    {
+        UIImage *image = [UIImage imageWithData:self.profile.avatarData];
+        self.detailImageView.image = image;
+    }
+    else
+    {
+        UIImage *image = [UIImage imageNamed:@"avatar"];
+        self.detailImageView.image = image;
+    }
     self.detailTextView.text = self.profile.memo;
-    
 
+    self.fersCountLabel.text = [NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count];
+
+    self.followingsCount = [NSString stringWithFormat:@"Fings:%lu",(unsigned long)self.profile.followings.count];
+
+    [self.followingButton setTitle:self.followingsCount forState:UIControlStateNormal];
+
+
+
+}
+
+- (BOOL)isCurrentUserProfile
+{
+//    User *user = [User currentUser];
+//    PFQuery *profileQuery = [Profile query];
+//    [profileQuery includeKey:@"followers"];
+//    [profileQuery includeKey:@"followings"];
+//    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
+//     {
+//         if (!error)
+//         {
+//            self.currentUserProfile = (Profile *)object;
+//             if (self.profile isEqual:self.currentUserProfile)
+//             {
+//                 return YES;
+//             }
+//         }
+//         else
+//         {
+//             [self errorAlertWindow:error.localizedDescription];
+//         }
+//     }];
+//    return NO;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -50,7 +97,6 @@
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
 
     NSData *data = [self.collectionViewArray[indexPath.item] imageData];
-
 
     cell.imageView.image = [UIImage imageWithData:data];
     
@@ -77,6 +123,34 @@
     }];
 
 
+}
+
+- (IBAction)followingOnButtonPressed:(UIButton *)sender
+{
+    User *user = [User currentUser];
+    PFQuery *profileQuery = [Profile query];
+    [profileQuery includeKey:@"followers"];
+    [profileQuery includeKey:@"followings"];
+    [profileQuery getObjectInBackgroundWithId:[user[@"profile"] objectId] block:^(PFObject *object, NSError *error)
+     {
+         if (!error)
+         {
+             self.currentUserProfile = (Profile *)object;
+             NSMutableArray *followingArray = [@[]mutableCopy];
+             followingArray = [profile.followings mutableCopy];
+             [followingArray addObject:self.profile];
+
+
+
+
+
+
+         }
+         else
+         {
+             [self errorAlertWindow:error.localizedDescription];
+         }
+     }];
 }
 
 -(void)errorAlertWindow:(NSString *)message
