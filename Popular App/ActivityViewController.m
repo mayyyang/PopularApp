@@ -30,6 +30,16 @@
 {
     [super viewDidLoad];
 
+//    self.profile = [[PFUser currentUser] objectForKey:@"profile"];
+//
+//    [self queryForFollowing];
+//    [self queryForFollowers];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
     self.profile = [[PFUser currentUser] objectForKey:@"profile"];
 
     [self queryForFollowing];
@@ -39,7 +49,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewDidAppear:YES];
     [self.activityTableView reloadData];
 }
 

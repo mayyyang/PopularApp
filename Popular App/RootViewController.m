@@ -15,6 +15,7 @@
 #import <ParseUI/ParseUI.h>
 #import "Profile.h"
 #import "LoginViewController.h"
+#import "SignupViewController.h"
 
 @interface RootViewController () <UICollectionViewDataSource, UICollectionViewDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -87,8 +88,10 @@
         [logInViewController setDelegate:self]; // Set ourselves as the delegate
         logInViewController.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
 
-        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc]init];
+        // Customize the Sign Up View Controller
+        SignupViewController *signUpViewController = [[SignupViewController alloc]init];
         [signUpViewController setDelegate:self]; // Set ourselves as the delegate
+        signUpViewController.fields = PFSignUpFieldsDefault;
 
         // Assign our sign up controller to be displayed from the login controller
         [logInViewController setSignUpController:signUpViewController];
