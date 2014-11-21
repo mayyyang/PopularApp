@@ -80,11 +80,14 @@
              }
              if ([array containsObject:self.currentUserProfile.objectId])
              {
+                 [self.followingButton setBackgroundImage:[UIImage imageNamed:@"post"] forState:UIControlStateNormal];
+
                  self.followingButton.enabled = NO;
              }
 
              if ([self.profile.objectId isEqual: self.currentUserProfile.objectId])
              {
+                 [self.followingButton setBackgroundImage:[UIImage imageNamed:@"post"] forState:UIControlStateNormal];
                  self.followingButton.enabled = NO;
              }
          }
@@ -170,6 +173,7 @@
                 if (!error)
                 {
                     [self.fersCountButton setTitle:[NSString stringWithFormat:@"Fers:%lu",(unsigned long)self.profile.followers.count] forState:UIControlStateNormal];
+                 [self.followingButton setBackgroundImage:[UIImage imageNamed:@"post"] forState:UIControlStateNormal];
                     self.followingButton.enabled = NO;
                 }
                 else
