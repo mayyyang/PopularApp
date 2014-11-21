@@ -105,14 +105,6 @@
     }];
 }
 
-//MARK: logout user account on button pressed
-- (IBAction)logoutButton:(UIButton *)sender
-{
-    [PFUser logOut];
-    RootViewController *rootVC = [[RootViewController alloc]init];
-    [self presentViewController:rootVC animated:YES completion:nil];
-}
-
 //MARK: segue to followings tableview
 - (IBAction)followingListOnButtonPressed:(UIButton *)sender
 {
