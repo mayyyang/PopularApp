@@ -48,6 +48,7 @@
 		FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B951A1AEF1700E40A93 /* ActivityViewController.m */; };
 		FBBB8B991A1AEF3B00E40A93 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */; };
 		FBE7E7241A1E9FCB00386562 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */; };
+		FBE7E7271A1ED3BE00386562 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE7E7261A1ED3BE00386562 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,8 @@
 		FBBB8B981A1AEF3B00E40A93 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		FBE7E7221A1E9FCB00386562 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		FBE7E7251A1ED3BE00386562 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		FBE7E7261A1ED3BE00386562 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +235,8 @@
 				FBBB8B6C1A1ACE3B00E40A93 /* Main.storyboard */,
 				FBE7E7221A1E9FCB00386562 /* MainTabBarController.h */,
 				FBE7E7231A1E9FCB00386562 /* MainTabBarController.m */,
+				FBE7E7251A1ED3BE00386562 /* LoginViewController.h */,
+				FBE7E7261A1ED3BE00386562 /* LoginViewController.m */,
 				FBBB8B661A1ACE3B00E40A93 /* AppDelegate.h */,
 				FBBB8B671A1ACE3B00E40A93 /* AppDelegate.m */,
 				FBBB8B691A1ACE3B00E40A93 /* RootViewController.h */,
@@ -402,6 +407,7 @@
 				FBBB8B8A1A1AEE2100E40A93 /* RootDetailViewController.m in Sources */,
 				49ED21591A1BEB9C009EBE77 /* Tag.m in Sources */,
 				FBBB8B931A1AEEF000E40A93 /* CameraViewController.m in Sources */,
+				FBE7E7271A1ED3BE00386562 /* LoginViewController.m in Sources */,
 				FBBB8B651A1ACE3B00E40A93 /* main.m in Sources */,
 				49ED215A1A1BEBA2009EBE77 /* Comment.m in Sources */,
 				FBBB8B961A1AEF1700E40A93 /* ActivityViewController.m in Sources */,
