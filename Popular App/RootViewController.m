@@ -172,6 +172,7 @@
              {
                  self.collectionViewArray = objects;
                  [self.collectionView reloadData];
+                    [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
              }
 
          }];
@@ -195,6 +196,7 @@
              {
                  self.collectionViewArray = objects;
                  [self.collectionView reloadData];
+                [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
              }
 
          }];
