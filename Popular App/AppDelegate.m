@@ -20,7 +20,17 @@
     // Override point for customization after application launch.
     [Parse setApplicationId:@"ZSDelA0ymCTwULzZJ9ShKLgMbtRexOjA6mMq9prl"
                   clientKey:@"dWbC11LlTCjvggadRSUrAjEukS9gBDNS4W1eQL6C"];
-  //  [PFUser logOut];
+
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:185.0/255.0 green:237.0/255.0 blue:239.0/255.0 alpha:0.0]];
+
+//    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+//    {
+//        [[UINavigationBar appearance] setTintColor: [UIColor colorWithRed:59/255.0 green:171/255.0 blue:184/255.0 alpha:1.0]];
+//    }
+//    else
+//    {
+//        [[UINavigationBar appearance] setBarTintColor: [UIColor colorWithRed:59/255.0 green:171/255.0 blue:184/255.0 alpha:1.0]];
+//    }
     return YES;
 }
 

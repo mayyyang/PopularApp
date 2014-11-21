@@ -19,6 +19,10 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"DidLogout" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         self.selectedViewController = self.viewControllers.firstObject;
     }];
+//[[UITabBar appearance] setBackgroundColor:[UIColor colorWithRed:185.0/255.0 green:237.0/255.0 blue:239.0/255.0 alpha:0.0]];
+
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:(185.0/255.0) green:(237.0/255.0) blue:(239.0/255.0) alpha:0.0]];
+
 }
 
 - (void)didReceiveMemoryWarning {
