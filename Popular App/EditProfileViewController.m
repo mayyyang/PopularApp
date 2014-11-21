@@ -7,8 +7,7 @@
 //
 
 #import "EditProfileViewController.h"
-#import "Profile.h"
-#import "User.h"
+
 
 @interface EditProfileViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -17,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property Profile *profile;
-@property User *user;
 
 @end
 
@@ -39,27 +36,20 @@
 //MARK: load user's name, memo, username, and password count from parse
 - (void)reloadProfile
 {
-    self.user = [User currentUser];
-    PFQuery *profileQuery = [Profile query];
-    [profileQuery whereKey:@"objectId" equalTo:[self.user[@"profile"] objectId]];
-    [profileQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
-             self.profile = objects.firstObject;
-             self.nameTextField.text = self.profile.name;
-             self.descriptionTextField.text = self.profile.memo;
-             UIImage *image = [UIImage imageWithData:self.profile.avatarData];
-             self.imageView.image = image;
-             self.navigationItem.title = self.user.username;
-             self.emailTextField.text = self.user.email;
-             self.passwordTextField.text = self.user.password;
-         }
-         else
-         {
-             [self Error:error];
-         }
-     }];
+    self.nameTextField.text = self.profile.name;
+    self.descriptionTextField.text = self.profile.memo;
+    if (self.profile.avatarData)
+    {
+        UIImage *image = [UIImage imageWithData:self.profile.avatarData];
+        self.imageView.image = image;
+    }
+    else
+    {
+        UIImage *image = [UIImage imageNamed:@"avatar"];
+        self.imageView.image = image;
+    }
+    self.emailTextField.text = self.user.email;
+    self.passwordTextField.text = self.user.password;
 }
 
 //MARK: dismiss keyboard
@@ -96,7 +86,7 @@
          }
          else
          {
-             [self Error:error];
+             [self error:error];
          }
      }];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -111,7 +101,7 @@
     self.user.email = self.emailTextField.text;
     if (self.user.password.length != 0)
     {
-            self.user.password = self.passwordTextField.text;
+        self.user.password = self.passwordTextField.text;
     }
     [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
@@ -125,19 +115,19 @@
                   }
                   else
                   {
-                      [self Error:error];
+                      [self error:error];
                   }
               }];
          }
          else
          {
-             [self Error:error];
+             [self error:error];
          }
      }];
 }
 
 //MARK: UIAlert
-- (void)Error:(NSError *)error
+- (void)error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error.localizedDescription

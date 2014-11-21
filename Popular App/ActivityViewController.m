@@ -37,6 +37,12 @@
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidLoad];
+    [self.activityTableView reloadData];
+}
+
 - (PFQuery *)queryForFollowing
 {
     PFQuery *q = [Profile query];

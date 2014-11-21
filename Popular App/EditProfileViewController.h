@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Profile.h"
+#import "User.h"
 
 @interface EditProfileViewController : UIViewController
+
+@property Profile *profile;
+@property User *user;
 
 @end

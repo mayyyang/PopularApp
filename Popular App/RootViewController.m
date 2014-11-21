@@ -52,7 +52,7 @@
     {
             PFQuery *query = [Photo query];
             [query includeKey:@"createdAt"];
-            [query orderByAscending:@""@"createdAt"];
+            [query orderByDescending:@"createdAt"];
             query.limit = 10;
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
             {
@@ -158,7 +158,7 @@
     {
         PFQuery *query = [Photo query];
         [query includeKey:@"createdAt"];
-        [query orderByAscending:@""@"createdAt"];
+        [query orderByDescending:@"createdAt"];
         query.limit = 10;
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
@@ -179,8 +179,9 @@
     else
     {
         PFQuery *query = [Photo query];
-        [query whereKey:@"likeCount" greaterThan:@1];
-        [query orderByAscending:@"likeCount"];
+//        [query whereKey:@"likeCount" greaterThan:@1];
+        [query orderByDescending:@"likeCount"];
+//        [query orderByDescending:@"createdAt"];
         query.limit = 10;
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {

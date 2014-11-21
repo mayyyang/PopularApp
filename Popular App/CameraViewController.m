@@ -51,7 +51,7 @@
 }
 
 //MARK: use currentUser to find current profile and assign to photo.profile
-//MARK: UIImagePicker delegate to store photo.imageData and display on imageview
+//MARK: UIImagePicker delegate to store photo.imageData and photo.likeCount and display on imageview
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *pickerImage = info[UIImagePickerControllerEditedImage];
@@ -61,6 +61,7 @@
     User *user = [User currentUser];
     Profile *profile = user[@"profile"];
     self.photo.profile = profile;
+    self.photo.likeCount = 0;
     self.imageView.image = pickerImage;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -142,13 +143,13 @@
                 }
                 else
                 {
-                    [self Error:error];
+                    [self error:error];
                 }
             }];
         }
         else
         {
-            [self Error:error];
+            [self error:error];
         }
     }];
 }
@@ -163,7 +164,7 @@
 }
 
 //MARK: UIAlert
-- (void)Error:(NSError *)error
+- (void)error:(NSError *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error.localizedDescription
