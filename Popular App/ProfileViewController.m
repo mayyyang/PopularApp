@@ -8,7 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "PhotoCollectionViewCell.h"
-#import "RootViewController.h"
+#import "RootDetailViewController.h"
 #import "FollowListViewController.h"
 #import "EditProfileViewController.h"
 #import <ParseUI/ParseUI.h>
@@ -147,6 +147,11 @@
             flvc.isFollowing = NO;
         }
     }
+    else
+    {
+        RootDetailViewController *rdvc = segue.destinationViewController;
+        rdvc.photo = sender;
+    }
 }
 
 //MARK: delete user's photo in parse and reload collectionview
@@ -155,6 +160,14 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirmation"
                                                                    message:@"Are you sure you would like to delete your photo"
                                                             preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *editAction = [UIAlertAction actionWithTitle:@"Edit"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action)
+                                   {
+                                       Photo *selectedPhoto = self.arrayOfPhoto[indexPath.item];
+                                       [self performSegueWithIdentifier:@"photoSegue" sender:selectedPhoto];
+                                   }];
+    [alert addAction:editAction];
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction *action)
